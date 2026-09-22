@@ -4,7 +4,7 @@ La auditoría no es una revisión visual: el script `generador/validar_sistema.p
 de datos de prueba, **recalcula el libro completo con el motor de cálculo de LibreOffice** y
 compara cada resultado contra el valor calculado a mano.
 
-**Resultado de la última corrida: 180 pruebas · 180 correctas · 0 fallidas · 0 errores de Excel.**
+**Resultado de la última corrida: 181 pruebas · 181 correctas · 0 fallidas · 0 errores de Excel.**
 
 ```bash
 python3 generador/construir_sistema.py && python3 generador/validar_sistema.py
@@ -29,7 +29,7 @@ Datos del escenario de prueba: 2 compras (una pagada, una a crédito sin proveed
 | GASTOS | 3 | ID, saldo por pagar, detección de gasto sin categoría |
 | RENTABILIDAD | 37 | Estado de resultados de 2 meses, acumulados, por producto/categoría/canal, ROI, ROAS |
 | CAJA | 16 | Entradas, salidas, arrastre de saldo entre meses, utilidad ≠ flujo, CxC y CxP al cierre |
-| CLIENTES / PROVEEDORES | 7 | Primera y última compra, acumulados, saldos |
+| CLIENTES / PROVEEDORES | 8 | Primera y última compra, acumulados, saldos |
 | EQUILIBRIO | 13 | Modo automático y manual, punto de equilibrio, margen de seguridad, simulador, sensibilidad |
 | ESCENARIOS | 9 | Escenario base automático y escenarios vacíos en PENDIENTE |
 | METAS | 5 | Cumplimiento, diferencia, venta diaria requerida, mes sin meta |

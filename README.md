@@ -87,7 +87,7 @@ rompe una fórmula. No hay copiar-y-pegar entre hojas.
 | Clasificación de clientes (ACTIVO / EN RIESGO / INACTIVO) y cobertura de inventario en días | Decisiones comerciales, no solo contables |
 | Matriz de sensibilidad del punto de equilibrio | Responde «¿y si el costo sube 10%?» sin tocar nada |
 | Campo `Folio` en VENTAS | Agrupa varias líneas de una misma factura, y prepara la tabla `venta` / `venta_linea` del futuro software |
-| Suite de auditoría automatizada (`generador/validar_sistema.py`) | 180 pruebas con motor de cálculo real |
+| Suite de auditoría automatizada (`generador/validar_sistema.py`) | 181 pruebas con motor de cálculo real |
 
 ---
 
@@ -96,7 +96,7 @@ rompe una fórmula. No hay copiar-y-pegar entre hojas.
 ```bash
 pip install openpyxl
 python3 generador/construir_sistema.py     # genera el .xlsx
-python3 generador/validar_sistema.py       # audita con LibreOffice (180 pruebas)
+python3 generador/validar_sistema.py       # audita con LibreOffice (181 pruebas)
 ```
 
 | Archivo | Contenido |

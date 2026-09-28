@@ -1,3 +1,14 @@
+# AROMATIC
+
+Este repositorio contiene dos proyectos:
+
+| Proyecto | Carpeta | Descripción |
+|---|---|---|
+| **Sitio web** | [`web/`](web/README.md) | Web premium de la marca (Next.js). Suavizante, Detergente líquido y Jabón líquido. |
+| **Sistema financiero** | raíz · `generador/` | Excel de gestión comercial y financiera (documentado abajo). |
+
+---
+
 # AROMATIC — Sistema Financiero y de Gestión Comercial
 
 Sistema financiero funcional en Excel para AROMATIC (productos de limpieza, Honduras),

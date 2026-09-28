@@ -10,8 +10,19 @@ npm run build      # genera el sitio estático en web/out/
 npm run lint && npm run typecheck
 ```
 
-`npm run build` produce HTML/CSS/JS puros en `out/`: se publica en Vercel, Netlify,
-Cloudflare Pages, GitHub Pages o cualquier hosting, sin servidor.
+`npm run build` produce HTML/CSS/JS puros en `out/`: se publica en cualquier hosting, sin servidor.
+
+## Publicación (GitHub Pages)
+
+El flujo `.github/workflows/deploy-web.yml` publica la web en
+**https://andremartti.github.io/Aromatic/** cada vez que llegan cambios de `web/` a `main`.
+En los pull requests solo compila y verifica.
+
+- **Activación (una sola vez):** Settings → Pages → *Build and deployment* → Source: **GitHub Actions**.
+- **WhatsApp en producción:** Settings → Secrets and variables → Actions → *Variables* →
+  `WHATSAPP_NUMBER` (solo dígitos). Luego Actions → "Publicar sitio web" → *Run workflow*.
+- **Dominio propio:** Settings → Pages → *Custom domain*. Con dominio propio la web vive en la raíz:
+  en el flujo cambie `NEXT_PUBLIC_BASE_PATH` a vacío.
 
 ## Lo que se edita sin tocar diseño
 
@@ -19,7 +30,7 @@ Cloudflare Pages, GitHub Pages o cualquier hosting, sin servidor.
 |---|---|
 | Productos, descripciones, aromas, presentaciones, **precios**, imágenes | `src/products/products.ts` |
 | Colores decorativos de cada aroma | `src/products/fragrances.ts` |
-| Número de WhatsApp | variable `NEXT_PUBLIC_WHATSAPP_NUMBER` (ver `.env.example`) → `WHATSAPP_NUMBER` en `src/config/site.ts` |
+| Número de WhatsApp | local: `NEXT_PUBLIC_WHATSAPP_NUMBER` en `web/.env.local` · publicado: variable de repositorio `WHATSAPP_NUMBER` |
 | Redes sociales, moneda, eslogan | `src/config/site.ts` |
 | Menú | `src/config/navigation.ts` |
 

@@ -6,6 +6,7 @@ import "@fontsource-variable/manrope";
 import "./globals.css";
 import { site } from "@/config/site";
 import { Providers } from "@/components/Providers";
+import { asset } from "@/lib/asset";
 
 export const metadata: Metadata = {
   title: { default: `${site.name} — El cuidado que se siente`, template: `%s · ${site.name}` },
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     locale: "es_HN",
     type: "website",
   },
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: asset("/favicon.svg") },
 };
 
 export const viewport: Viewport = {

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Product } from "@/products/types";
+import { asset } from "@/lib/asset";
 import { Bottle } from "./Bottle";
 
 interface ProductVisualProps {
@@ -21,7 +22,7 @@ export function ProductVisual({ product, className, sizes = "(min-width: 1024px)
     return (
       <div className={`relative ${className ?? ""}`}>
         <Image
-          src={product.image}
+          src={asset(product.image)}
           alt={product.name}
           fill
           sizes={sizes}

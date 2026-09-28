@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from "react";
 import { PRODUCTS } from "@/products/products";
 import { ProductModal } from "./ProductModal";
@@ -21,7 +22,15 @@ const ProductModalContext = createContext<ProductModalContextValue | null>(null)
 
 /** Estado global del detalle de producto: cualquier sección puede abrirlo. */
 export function ProductModalProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const [state, setState] = useState<ModalState | null>(null);
+
+  // Al cambiar de página (p. ej. "Ver página del producto") el modal se cierra.
+  const [lastPathname, setLastPathname] = useState(pathname);
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setState(null);
+  }
 
   const openProduct = useCallback((productId: string, options?: OpenOptions) => {
     const index = PRODUCTS.findIndex((p) => p.id === productId);

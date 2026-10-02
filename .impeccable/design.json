@@ -1,0 +1,529 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-02T19:18:03.498558+00:00",
+  "title": "Design System: AROMATIC",
+  "extensions": {
+    "colorMeta": {
+      "stock": {
+        "role": "neutral",
+        "displayName": "Papel de página",
+        "canonical": "#fbf8f3",
+        "tonalRamp": [
+          "#0d0b08",
+          "#272521",
+          "#44423e",
+          "#63615d",
+          "#85827d",
+          "#a7a5a0",
+          "#ccc9c4",
+          "#f1eee9"
+        ]
+      },
+      "ivory": {
+        "role": "neutral",
+        "displayName": "Papel de etiqueta",
+        "canonical": "#f7f1e8",
+        "tonalRamp": [
+          "#0e0a05",
+          "#29241e",
+          "#46413a",
+          "#666059",
+          "#878179",
+          "#aaa49c",
+          "#cec8c0",
+          "#f4eee5"
+        ]
+      },
+      "cream": {
+        "role": "neutral",
+        "displayName": "Crema",
+        "canonical": "#f1e9dd",
+        "tonalRamp": [
+          "#0f0a04",
+          "#2a241b",
+          "#474137",
+          "#676056",
+          "#888176",
+          "#aba499",
+          "#d0c8bc",
+          "#f5ede1"
+        ]
+      },
+      "linen": {
+        "role": "neutral",
+        "displayName": "Lino",
+        "canonical": "#e8dece",
+        "tonalRamp": [
+          "#100a02",
+          "#2b2418",
+          "#494134",
+          "#696052",
+          "#8a8172",
+          "#ada495",
+          "#d2c8b8",
+          "#f7eddd"
+        ]
+      },
+      "champagne": {
+        "role": "tertiary",
+        "displayName": "Campo champagne",
+        "canonical": "#dcc8aa",
+        "tonalRamp": [
+          "#150800",
+          "#312207",
+          "#503f25",
+          "#705e43",
+          "#927f63",
+          "#b5a285",
+          "#dac6a8",
+          "#ffebcd"
+        ]
+      },
+      "champagne-deep": {
+        "role": "tertiary",
+        "displayName": "Champagne profundo",
+        "canonical": "#c4aa84",
+        "tonalRamp": [
+          "#180600",
+          "#352000",
+          "#543e1a",
+          "#745d39",
+          "#977e59",
+          "#baa17b",
+          "#dfc59e",
+          "#ffeac2"
+        ]
+      },
+      "charcoal": {
+        "role": "primary",
+        "displayName": "Carbón de imprenta",
+        "canonical": "#1f1d1b",
+        "tonalRamp": [
+          "#0d0b09",
+          "#272523",
+          "#44413f",
+          "#63615e",
+          "#84827f",
+          "#a7a4a2",
+          "#cbc8c6",
+          "#f1eeeb"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#2b2825",
+        "tonalRamp": [
+          "#0d0b08",
+          "#272421",
+          "#45413e",
+          "#64605d",
+          "#85827e",
+          "#a8a4a0",
+          "#ccc8c4",
+          "#f2eeea"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Tinta secundaria",
+        "canonical": "#5c554d",
+        "tonalRamp": [
+          "#0f0a05",
+          "#2a241d",
+          "#474139",
+          "#676058",
+          "#888178",
+          "#aba49b",
+          "#d0c8be",
+          "#f5ede3"
+        ]
+      },
+      "bronze": {
+        "role": "tertiary",
+        "displayName": "Bronce",
+        "canonical": "#5f4b33",
+        "tonalRamp": [
+          "#170700",
+          "#332109",
+          "#513e26",
+          "#725d45",
+          "#947e65",
+          "#b8a186",
+          "#dcc5aa",
+          "#ffeace"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Filete",
+        "canonical": "#d9ccb8",
+        "tonalRamp": [
+          "#120900",
+          "#2d2313",
+          "#4b402f",
+          "#6b5f4e",
+          "#8d816e",
+          "#b0a390",
+          "#d4c7b3",
+          "#faedd8"
+        ]
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Filete de etiqueta",
+        "canonical": "#b59d7b",
+        "tonalRamp": [
+          "#180600",
+          "#342101",
+          "#533e1e",
+          "#735d3d",
+          "#957e5d",
+          "#b9a17f",
+          "#dec5a2",
+          "#ffeac6"
+        ]
+      },
+      "sage": {
+        "role": "secondary",
+        "displayName": "Salvia segunda tinta",
+        "canonical": "#4c5d48",
+        "tonalRamp": [
+          "#030f02",
+          "#1b2a17",
+          "#374733",
+          "#566752",
+          "#768872",
+          "#99ab94",
+          "#bcd0b8",
+          "#e1f5dc"
+        ]
+      },
+      "sage-soft": {
+        "role": "secondary",
+        "displayName": "Salvia suave",
+        "canonical": "#e0e6da",
+        "tonalRamp": [
+          "#090d05",
+          "#22271e",
+          "#3f443a",
+          "#5e6359",
+          "#7f847a",
+          "#a2a79c",
+          "#c6cbc0",
+          "#ebf1e5"
+        ]
+      },
+      "aroma-floral": {
+        "role": "decorative",
+        "displayName": "Tinte Floral",
+        "canonical": "#ead8d4",
+        "tonalRamp": [
+          "#130806",
+          "#2e211f",
+          "#4c3e3b",
+          "#6d5d5a",
+          "#8e7e7b",
+          "#b2a19d",
+          "#d6c5c1",
+          "#fceae6"
+        ]
+      },
+      "aroma-chicle": {
+        "role": "decorative",
+        "displayName": "Tinte Chicle",
+        "canonical": "#ecd7de",
+        "tonalRamp": [
+          "#13070c",
+          "#2f2026",
+          "#4d3d42",
+          "#6d5c62",
+          "#8f7c83",
+          "#b39fa6",
+          "#d7c3ca",
+          "#fde8ef"
+        ]
+      },
+      "aroma-tropical": {
+        "role": "decorative",
+        "displayName": "Tinte Frutas tropicales",
+        "canonical": "#eedbbf",
+        "tonalRamp": [
+          "#150800",
+          "#30220a",
+          "#4f3f27",
+          "#6f5e46",
+          "#918066",
+          "#b4a288",
+          "#d9c6ab",
+          "#ffeccf"
+        ]
+      },
+      "aroma-coco": {
+        "role": "decorative",
+        "displayName": "Tinte Coco",
+        "canonical": "#efe7da",
+        "tonalRamp": [
+          "#0f0a03",
+          "#2a241a",
+          "#474137",
+          "#676055",
+          "#898176",
+          "#aba498",
+          "#d0c8bb",
+          "#f5ede0"
+        ]
+      },
+      "aroma-cherry": {
+        "role": "decorative",
+        "displayName": "Tinte Cherry",
+        "canonical": "#e4c8c6",
+        "tonalRamp": [
+          "#160606",
+          "#331f1e",
+          "#523b3a",
+          "#725a59",
+          "#957b79",
+          "#b89e9c",
+          "#ddc2c0",
+          "#ffe7e5"
+        ]
+      },
+      "aroma-fresh": {
+        "role": "decorative",
+        "displayName": "Tinte Fresh",
+        "canonical": "#d8e3da",
+        "tonalRamp": [
+          "#060d08",
+          "#1f2721",
+          "#3c453d",
+          "#5b645c",
+          "#7b857d",
+          "#9ea8a0",
+          "#c2ccc4",
+          "#e7f2e9"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "masthead": {
+        "displayName": "Mástil",
+        "purpose": "Wordmark AROMATIC a todo el ancho en hero y pie."
+      },
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titular del hero."
+      },
+      "index": {
+        "displayName": "Índice",
+        "purpose": "Palabras del índice Más que limpieza."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de sección."
+      },
+      "title": {
+        "displayName": "Título",
+        "purpose": "Nombres de producto en etiquetas."
+      },
+      "lede": {
+        "displayName": "Entradilla",
+        "purpose": "Texto introductorio de sección."
+      },
+      "body": {
+        "displayName": "Texto",
+        "purpose": "Descripciones y párrafos."
+      },
+      "label": {
+        "displayName": "Campo",
+        "purpose": "Nombres de campo, navegación y botones en versalitas expandidas."
+      }
+    },
+    "shadows": [
+      {
+        "name": "paper",
+        "value": "0 1px 0 rgb(31 29 27 / 0.04), 0 18px 34px -24px rgb(84 62 36 / 0.34)",
+        "purpose": "Panel de etiqueta en reposo."
+      },
+      {
+        "name": "paper-lift",
+        "value": "0 1px 0 rgb(31 29 27 / 0.05), 0 30px 50px -28px rgb(84 62 36 / 0.42)",
+        "purpose": "Etiqueta de producto en hover."
+      },
+      {
+        "name": "float",
+        "value": "0 10px 30px -10px rgb(31 29 27 / 0.35)",
+        "purpose": "Botón flotante de WhatsApp."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Entradas, hover y feedback de UI."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(0.77, 0, 0.175, 1)",
+        "purpose": "Movimiento en pantalla (filete del mástil)."
+      },
+      {
+        "name": "ease-ink",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Entintado de titulares (clip-path)."
+      },
+      {
+        "name": "ease-drawer",
+        "value": "cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Hoja del menú móvil."
+      },
+      {
+        "name": "duration-press",
+        "value": "140ms",
+        "purpose": "Presión scale(0.97)."
+      },
+      {
+        "name": "duration-ui",
+        "value": "220ms",
+        "purpose": "Hover, chips, colores."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "640ms",
+        "purpose": "Entintado de carga del hero."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      },
+      {
+        "name": "wide",
+        "value": "1600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botón de tinta",
+      "kind": "button",
+      "refersTo": "button-ink",
+      "description": "Acción principal de navegación (Descubrir productos).",
+      "html": "<a class=\"ds-btn-ink\" href=\"#\">DESCUBRIR PRODUCTOS <svg width=\"16\" height=\"16\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M218.83 130.83l-72 72a4 4 0 0 1-5.66-5.66L206.34 132H40a4 4 0 0 1 0-8h166.34l-65.17-65.17a4 4 0 0 1 5.66-5.66l72 72a4 4 0 0 1 0 5.66Z\"/></svg></a>",
+      "css": ".ds-btn-ink{display:inline-flex;align-items:center;gap:12px;min-height:52px;padding:0 28px;border-radius:2px;background:#1f1d1b;color:#fbf8f3;font-family:\"Archivo Variable\",system-ui,sans-serif;font-stretch:112%;font-weight:600;font-size:13px;letter-spacing:.12em;text-decoration:none;transition:transform 140ms cubic-bezier(.23,1,.32,1),background-color 220ms ease}.ds-btn-ink:hover{background:#3a3631}.ds-btn-ink:active{transform:scale(.97)}.ds-btn-ink:focus-visible{outline:2px solid #1f1d1b;outline-offset:3px}"
+    },
+    {
+      "name": "Botón WhatsApp",
+      "kind": "button",
+      "refersTo": "button-sage",
+      "description": "Única acción de compra: abre WhatsApp con el pedido escrito.",
+      "html": "<a class=\"ds-btn-sage\" href=\"#\">COMPRAR POR WHATSAPP</a>",
+      "css": ".ds-btn-sage{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:2px;background:#4c5d48;color:#fbf8f3;font-family:\"Archivo Variable\",system-ui,sans-serif;font-stretch:112%;font-weight:600;font-size:13px;letter-spacing:.12em;text-decoration:none;transition:transform 140ms cubic-bezier(.23,1,.32,1),background-color 220ms ease}.ds-btn-sage:hover{background:#3f4f3c}.ds-btn-sage:active{transform:scale(.97)}.ds-btn-sage:focus-visible{outline:2px solid #1f1d1b;outline-offset:3px}"
+    },
+    {
+      "name": "Enlace de tinta",
+      "kind": "custom",
+      "refersTo": "ink-link",
+      "description": "Acción secundaria con filete inferior.",
+      "html": "<a class=\"ds-ink-link\" href=\"#\">CONOCER AROMATIC</a>",
+      "css": ".ds-ink-link{position:relative;display:inline-flex;align-items:center;min-height:44px;font-family:\"Archivo Variable\",system-ui,sans-serif;font-stretch:112%;font-weight:600;font-size:13px;letter-spacing:.12em;color:#1f1d1b;text-decoration:none}.ds-ink-link::after{content:\"\";position:absolute;left:0;right:0;bottom:9px;height:1px;background:currentColor;transform-origin:left;transition:transform 220ms cubic-bezier(.23,1,.32,1)}.ds-ink-link:hover::after{transform:scaleX(.35)}.ds-ink-link:focus-visible{outline:2px solid #1f1d1b;outline-offset:3px}"
+    },
+    {
+      "name": "Etiqueta de producto",
+      "kind": "card",
+      "refersTo": "label-panel",
+      "description": "Producto compuesto como etiqueta impresa: placa con envase y campos.",
+      "html": "<article class=\"ds-label\"><div class=\"ds-plate\"></div><div class=\"ds-body\"><span class=\"ds-field\">AROMATIC</span><h3 class=\"ds-name\">Suavizante</h3><dl class=\"ds-fields\"><dt class=\"ds-field\">AROMA</dt><dd>Floral</dd><dt class=\"ds-field\">PRESENTACIÓN</dt><dd>Galón</dd></dl></div></article>",
+      "css": ".ds-label{position:relative;max-width:360px;padding:10px;border-radius:22px;background:#f7f1e8;box-shadow:0 1px 0 rgb(31 29 27/.04),0 18px 34px -24px rgb(84 62 36/.34);transition:transform 260ms cubic-bezier(.23,1,.32,1),box-shadow 260ms cubic-bezier(.23,1,.32,1)}.ds-label::before{content:\"\";position:absolute;inset:9px;border:1px solid #b59d7b;outline:1px solid #b59d7b;outline-offset:2px;border-radius:14px;opacity:.55;pointer-events:none}.ds-label:hover{transform:translateY(-4px);box-shadow:0 1px 0 rgb(31 29 27/.05),0 30px 50px -28px rgb(84 62 36/.42)}.ds-plate{aspect-ratio:4/3;border-radius:14px;background:linear-gradient(to top,#e6d6cc 0 14%,transparent 14.2%),#f0e4dc}.ds-body{padding:24px 20px}.ds-field{font-family:\"Archivo Variable\",system-ui,sans-serif;font-stretch:125%;font-weight:600;font-size:11px;letter-spacing:.2em;color:#5c554d}.ds-name{margin:10px 0 0;font-family:\"Ibarra Real Nova\",Georgia,serif;font-weight:400;font-size:32px;color:#1f1d1b}.ds-fields{margin:20px 0 0;padding-top:16px;border-top:1px solid #d9ccb8;font-family:\"Archivo Variable\",system-ui,sans-serif;color:#1f1d1b}.ds-fields dd{margin:4px 0 12px}"
+    },
+    {
+      "name": "Chip de opción",
+      "kind": "chip",
+      "refersTo": "option-chip",
+      "description": "Aroma o presentación en el detalle de producto.",
+      "html": "<label class=\"ds-chip ds-chip-on\">Coco</label><label class=\"ds-chip\">Cherry</label>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;min-height:46px;padding:0 18px;margin:0 6px 6px 0;border-radius:2px;box-shadow:inset 0 0 0 1px #b59d7b;font-family:\"Archivo Variable\",system-ui,sans-serif;font-size:15px;color:#2b2825;cursor:pointer;transition:background-color 220ms ease,color 220ms ease,box-shadow 220ms ease}.ds-chip:hover{box-shadow:inset 0 0 0 1px #1f1d1b}.ds-chip-on{background:#1f1d1b;color:#fbf8f3;box-shadow:inset 0 0 0 1px #1f1d1b}"
+    },
+    {
+      "name": "Campo de pedido",
+      "kind": "input",
+      "refersTo": "order-field",
+      "description": "Select nativo sin caja con filete inferior.",
+      "html": "<label class=\"ds-field-l\">PRODUCTO</label><select class=\"ds-select\"><option>Suavizante</option><option>Jabón líquido</option></select>",
+      "css": ".ds-field-l{display:block;font-family:\"Archivo Variable\",system-ui,sans-serif;font-stretch:125%;font-weight:600;font-size:11px;letter-spacing:.2em;color:#5c554d}.ds-select{appearance:none;width:260px;min-height:52px;margin-top:8px;padding:0 32px 0 0;border:0;border-bottom:1px solid #1f1d1b;border-radius:0;background:transparent;font-family:\"Ibarra Real Nova\",Georgia,serif;font-size:22px;color:#1f1d1b}.ds-select:focus-visible{outline:2px solid #1f1d1b;outline-offset:4px}"
+    },
+    {
+      "name": "Navegación",
+      "kind": "nav",
+      "refersTo": "site-nav",
+      "description": "Nav de una línea en papel translúcido.",
+      "html": "<nav class=\"ds-nav\"><span class=\"ds-mark\">AROMATIC</span><a href=\"#\">PRODUCTOS</a><a href=\"#\">AROMAS</a><a href=\"#\">SOBRE AROMATIC</a><a href=\"#\">CONTACTO</a></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:36px;height:64px;padding:0 24px;background:rgb(251 248 243/.94);box-shadow:0 1px 0 #d9ccb8;font-family:\"Archivo Variable\",system-ui,sans-serif;font-stretch:125%}.ds-mark{margin-right:auto;font-size:15px;letter-spacing:.08em;color:#1f1d1b}.ds-nav a{font-weight:600;font-size:11px;letter-spacing:.2em;color:#2b2825;text-decoration:none}.ds-nav a:hover{text-decoration:underline;text-underline-offset:6px}.ds-nav a:focus-visible{outline:2px solid #1f1d1b;outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La etiqueta impresa",
+    "overview": "La web es el sistema de etiquetas de AROMATIC llevado a escala de página. El papel es la página (blanco cálido); los productos, los aromas y los datos de la marca se componen como etiquetas impresas: papel marfil, esquinas troqueladas, doble filete interior y solo dos tintas. El mástil AROMATIC en Archivo expandido abre y cierra la página como la cabecera de una etiqueta, y las etiquetas dibujadas en los envases repiten exactamente el mismo sistema que la interfaz.",
+    "keyCharacteristics": [
+      "Mástil AROMATIC a todo el ancho, impreso por encima de la placa de producto.",
+      "Etiquetas troqueladas con doble filete como contenedor único de producto y datos.",
+      "Dos tintas: carbón para todo el texto, salvia solo para selección y WhatsApp.",
+      "Ibarra Real Nova para la voz editorial; Archivo expandido en versalitas para nombres de campo.",
+      "Sin precios visibles: el campo de precio existe en datos y solo se imprime si se activa."
+    ],
+    "rules": [
+      {
+        "name": "The Two Inks Rule",
+        "body": "El texto se imprime en carbón (o tinta secundaria). La salvia se reserva para WhatsApp y la selección; si aparece en cualquier otro lugar, sobra.",
+        "section": "colors"
+      },
+      {
+        "name": "The Region Rule",
+        "body": "El champagne y el lino ocupan secciones completas a sangre; nunca se usan como acento en botones, insignias o bordes.",
+        "section": "colors"
+      },
+      {
+        "name": "The Field Name Rule",
+        "body": "Las versalitas expandidas nombran campos de datos (Aroma, Presentación, Disponible en) y la marca en una etiqueta; nunca se usan como antetítulo decorativo de una sección.",
+        "section": "typography"
+      },
+      {
+        "name": "The No Italics Rule",
+        "body": "Ibarra se usa en redonda; la jerarquía viene de tamaño y espacio, no de itálicas.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Rule",
+        "body": "Si una sombra no parece papel apoyado sobre papel, no pertenece al sistema.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do componer todo producto o dato de marca como etiqueta: papel marfil, troquel de 22px y doble filete.",
+      "Do usar \"Comprar por WhatsApp\" como única etiqueta de compra, en salvia.",
+      "Do dejar que los colores de región ocupen secciones completas a sangre.",
+      "Do mantener visibles los contenidos sin JavaScript y con movimiento reducido; animar solo transform, opacity y clip-path.",
+      "Do usar iconos de Phosphor (trazo light/regular)."
+    ],
+    "donts": [
+      "Don't mostrar precios, \"Consultar precio\" ni rangos de precio mientras features.prices esté desactivado.",
+      "Don't poner antetítulos en versalitas sobre los títulos de sección.",
+      "Don't usar la salvia fuera de WhatsApp y la selección, ni degradados de color en texto.",
+      "Don't usar radios de píldora o tarjetas iguales de icono + título + texto.",
+      "Don't simular fotografías oficiales: sin foto real, la ilustración del envase."
+    ]
+  }
+}

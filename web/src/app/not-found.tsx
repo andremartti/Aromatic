@@ -1,16 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { Navbar } from "@/components/Navbar";
+
+export const metadata: Metadata = {
+  title: "Página no encontrada",
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (
-    <main id="contenido" className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
-      <p className="wordmark text-sm text-muted">AROMATIC</p>
-      <h1 className="display mt-8 text-5xl md:text-6xl">Esta página no existe.</h1>
-      <Link
-        href="/"
-        className="mt-10 inline-flex min-h-12 items-center rounded-full bg-charcoal px-8 text-xs font-semibold tracking-[0.12em] text-ivory uppercase"
-      >
-        Volver al inicio
-      </Link>
-    </main>
+    <>
+      <Navbar variant="page" />
+      <main id="contenido" className="frame flex min-h-dvh flex-col justify-center pt-(--nav-h) pb-section">
+        <h1 className="display max-w-[16ch] text-heading">Esta página no existe.</h1>
+        <p className="mt-5 max-w-[40ch] text-lede text-muted">
+          Puede que el enlace haya cambiado. Los productos y aromas siguen en la página principal.
+        </p>
+        <div className="mt-9">
+          <Link href="/" className="btn btn-ink">
+            Volver al inicio
+          </Link>
+        </div>
+      </main>
+    </>
   );
 }

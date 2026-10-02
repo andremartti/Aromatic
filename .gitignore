@@ -1,2 +1,7 @@
 __pycache__/
 *.pyc
+
+# Impeccable: capturas de revisión y caché local del hook (se regeneran)
+.impeccable/review/
+.impeccable/hook.cache.json
+.impeccable/config.local.json

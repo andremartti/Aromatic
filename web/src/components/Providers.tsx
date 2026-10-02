@@ -1,14 +1,9 @@
 "use client";
 
-import { MotionConfig } from "framer-motion";
+import { MotionConfig } from "motion/react";
 import type { ReactNode } from "react";
-import { ProductModalProvider } from "./ProductModalProvider";
 
-/** Respeta "reducir movimiento" del sistema operativo en todas las animaciones. */
+/** Respeta "reducir movimiento" del sistema operativo en las animaciones de Motion. */
 export function Providers({ children }: { children: ReactNode }) {
-  return (
-    <MotionConfig reducedMotion="user">
-      <ProductModalProvider>{children}</ProductModalProvider>
-    </MotionConfig>
-  );
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
 }

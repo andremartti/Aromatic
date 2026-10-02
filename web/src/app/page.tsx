@@ -4,21 +4,26 @@ import { ExperienceSection } from "@/components/ExperienceSection";
 import { ProductShowcase } from "@/components/ProductShowcase";
 import { FragranceSection } from "@/components/FragranceSection";
 import { BrandSection } from "@/components/BrandSection";
-import { PremiumExperience } from "@/components/PremiumExperience";
+import { EditorialSection } from "@/components/EditorialSection";
+import { OrderSlip } from "@/components/OrderSlip";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { JsonLd } from "@/components/JsonLd";
+import { organizationJsonLd } from "@/lib/structured-data";
 
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <JsonLd data={organizationJsonLd()} />
+      <Navbar variant="home" />
       <main id="contenido">
         <Hero />
         <ExperienceSection />
         <ProductShowcase />
         <FragranceSection />
         <BrandSection />
-        <PremiumExperience />
+        <EditorialSection />
+        <OrderSlip />
       </main>
       <Footer />
       <WhatsAppButton />

@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cream-palette",
+        "value": "*",
+        "files": [
+          "web/src/app/globals.css"
+        ],
+        "createdAt": "2026-10-02T18:56:37.400Z",
+        "reason": "Paleta fijada por el brief de AROMATIC (ivory, blanco cálido, crema, champagne): el papel de página del mundo 'etiqueta impresa'."
+      }
+    ]
+  }
+}

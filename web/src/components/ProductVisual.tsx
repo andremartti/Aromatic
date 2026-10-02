@@ -1,11 +1,17 @@
-import Image from "next/image";
 import type { Product } from "@/products/types";
 import { asset } from "@/lib/asset";
 import { Bottle } from "./Bottle";
+import { ProductPhoto } from "./ProductPhoto";
 
 interface ProductVisualProps {
   product: Product;
   className?: string;
+  /** Línea inferior de la etiqueta ilustrada (aroma o presentación). */
+  detail?: string;
+  /** Tinte del líquido de la ilustración (por ejemplo, el del aroma elegido). */
+  tint?: string;
+  /** Presentación elegida: puede cambiar el envase ilustrado. */
+  presentationId?: string;
   /** Tamaños para next/image cuando exista fotografía. */
   sizes?: string;
   priority?: boolean;
@@ -17,27 +23,33 @@ interface ProductVisualProps {
  * - si no → ilustración del envase.
  * Para cambiar a fotos reales basta con editar `image` en products.ts.
  */
-export function ProductVisual({ product, className, sizes = "(min-width: 1024px) 33vw, 80vw", priority }: ProductVisualProps) {
-  if (product.image) {
-    return (
-      <div className={`relative ${className ?? ""}`}>
-        <Image
-          src={asset(product.image)}
-          alt={product.name}
-          fill
-          sizes={sizes}
-          priority={priority}
-          className="object-contain"
-        />
-      </div>
-    );
-  }
-  return (
+export function ProductVisual({
+  product,
+  className,
+  detail,
+  tint,
+  presentationId,
+  sizes = "(min-width: 1024px) 40vw, 90vw",
+  priority,
+}: ProductVisualProps) {
+  const illustration = (
     <Bottle
-      shape={product.visual.shape}
-      tint={product.visual.tint}
-      label={product.visual.label}
+      shape={(presentationId && product.visual.shapeByPresentation?.[presentationId]) || product.visual.shape}
+      tint={tint ?? product.visual.tint}
+      name={product.shortName}
+      detail={detail ?? product.presentations[0]?.label}
       className={className}
+    />
+  );
+  if (!product.image) return illustration;
+  return (
+    <ProductPhoto
+      src={asset(product.image)}
+      alt={product.imageAlt ?? product.name}
+      sizes={sizes}
+      priority={priority}
+      className={className}
+      fallback={illustration}
     />
   );
 }

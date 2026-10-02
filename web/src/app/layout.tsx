@@ -1,44 +1,56 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource/cormorant-garamond/400.css";
-import "@fontsource/cormorant-garamond/500.css";
-import "@fontsource/cormorant-garamond/400-italic.css";
-import "@fontsource-variable/manrope";
 import "./globals.css";
-import { site } from "@/config/site";
+import { archivo, ibarra } from "./fonts";
+import { SITE_URL, site } from "@/config/site";
 import { Providers } from "@/components/Providers";
-import { asset } from "@/lib/asset";
+import { RevealObserver } from "@/components/RevealObserver";
+
+const title = `${site.name} · El cuidado que se siente. La fragancia que permanece.`;
 
 export const metadata: Metadata = {
-  title: { default: `${site.name} — El cuidado que se siente`, template: `%s · ${site.name}` },
+  metadataBase: new URL(`${SITE_URL}/`),
+  title: { default: title, template: `%s · ${site.name}` },
   description: site.description,
   applicationName: site.name,
+  alternates: { canonical: "./" },
   openGraph: {
-    title: `${site.name} — El cuidado que se siente. La fragancia que permanece.`,
+    title,
     description: site.description,
     siteName: site.name,
     locale: "es_HN",
     type: "website",
+    url: "./",
+    images: [{ url: "og.png", width: 1200, height: 630, alt: `${site.name}: ${site.tagline}` }],
   },
-  icons: { icon: asset("/favicon.svg") },
+  twitter: { card: "summary_large_image", title, description: site.description, images: ["og.png"] },
+  icons: { icon: [{ url: "favicon.svg", type: "image/svg+xml" }] },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf7f2",
+  themeColor: "#fbf8f3",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es">
-      <body className="min-h-screen">
+    <html lang="es" className={`${ibarra.variable} ${archivo.variable}`} suppressHydrationWarning>
+      <body className="min-h-dvh">
+        {/* Marca que hay JavaScript antes de pintar: habilita los revelados sin ocultar contenido si JS falla. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.setAttribute('data-js','')" }} />
         <a
           href="#contenido"
-          className="fixed left-4 top-4 z-[60] -translate-y-24 rounded-full bg-charcoal px-5 py-3 text-sm text-ivory transition-transform focus:translate-y-0"
+          className="btn btn-ink fixed left-4 top-4 z-(--z-skip) -translate-y-24 focus:translate-y-0"
         >
           Saltar al contenido
         </a>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <RevealObserver />
+        </Providers>
       </body>
     </html>
   );

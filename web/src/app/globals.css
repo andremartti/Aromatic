@@ -1,116 +1,1410 @@
 @import "tailwindcss";
 
+/*
+ * ============================================================================
+ *  AROMATIC · Design tokens
+ * ============================================================================
+ *  Mundo visual: "etiqueta impresa". La página es papel; los productos y los
+ *  aromas se componen como etiquetas (papel marfil, doble filete, esquinas
+ *  troqueladas) impresas con dos tintas: carbón para el texto y salvia
+ *  únicamente para la selección y la acción de WhatsApp.
+ *
+ *  Cambiar la identidad visual = cambiar estos valores. Los componentes solo
+ *  usan los nombres semánticos (bg-stock, text-ink, rounded-label, etc.).
+ * ============================================================================
+ */
 @theme {
-  --color-ivory: #faf7f2;
-  --color-cream: #f3ede4;
-  --color-linen: #ece4d8;
-  --color-champagne: #d9c4a6;
-  --color-sand: #b9a383;
-  /* Bronce: acento cálido con contraste AA sobre fondos claros */
-  --color-bronze: #7a6448;
-  --color-charcoal: #1f1d1b;
+  /* Color ------------------------------------------------------------------ */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  /* Papel */
+  --color-stock: #fbf8f3; /* blanco cálido: fondo de página */
+  --color-ivory: #f7f1e8; /* papel de etiqueta */
+  --color-cream: #f1e9dd;
+  --color-linen: #e8dece;
+  --color-champagne: #dcc8aa; /* campo de color (aromas) */
+  --color-champagne-deep: #c4aa84;
+  /* Tintas */
+  --color-charcoal: #1f1d1b; /* tinta principal */
   --color-ink: #2b2825;
-  --color-muted: #5f5952;
-  --color-line: #e2d9cc;
-  --color-sage: #7f8f7c;
-  --color-sage-soft: #dfe5dc;
+  --color-muted: #5c554d; /* texto secundario sobre papel (AA) */
+  --color-bronze: #5f4b33; /* texto secundario sobre champagne (AA) */
+  --color-rule: #d9ccb8; /* filetes */
+  --color-rule-strong: #b59d7b; /* filete de etiqueta */
+  --color-sage: #4c5d48; /* segunda tinta: selección + WhatsApp */
+  --color-sage-soft: #e0e6da;
+  /* Tintes decorativos de aroma (no describen la composición del producto) */
+  --color-aroma-floral: #ead8d4;
+  --color-aroma-chicle: #ecd7de;
+  --color-aroma-tropical: #eedbbf;
+  --color-aroma-coco: #efe7da;
+  --color-aroma-cherry: #e4c8c6;
+  --color-aroma-fresh: #d8e3da;
 
-  --font-serif: "Cormorant Garamond", ui-serif, Georgia, "Times New Roman", serif;
-  --font-sans: "Manrope Variable", "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Tipografía ------------------------------------------------------------- */
+  --font-display: var(--font-ibarra), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-soft: 0 30px 60px -30px rgb(31 29 27 / 0.18), 0 12px 24px -18px rgb(31 29 27 / 0.12);
+  --text-label: 0.6875rem; /* 11px · nombres de campo en versalitas */
+  --text-label--line-height: 1.4;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.55;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-lede: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --text-lede--line-height: 1.6;
+  --text-title: clamp(1.75rem, 1.35rem + 1.1vw, 2.375rem);
+  --text-title--line-height: 1.08;
+  --text-heading: clamp(2.375rem, 1.55rem + 3vw, 4.25rem);
+  --text-heading--line-height: 1.04;
+  --text-display: clamp(2.5rem, 1.45rem + 3.9vw, 4.75rem);
+  --text-display--line-height: 1.03;
+  --text-index: clamp(3.25rem, 1.6rem + 7vw, 8.5rem);
+  --text-index--line-height: 0.95;
+
+  /* Espaciado (escala base de Tailwind + ritmo de secciones) --------------- */
+  --spacing-gutter: clamp(1.25rem, 0.6rem + 2.6vw, 4rem);
+  --spacing-section: clamp(5rem, 3.4rem + 6.4vw, 9.5rem);
+  --spacing-band: clamp(2.5rem, 1.8rem + 3vw, 5rem);
+
+  /* Radios: tinta (controles) y troquel (etiquetas) ------------------------ */
+  --radius-ink: 2px;
+  --radius-label: 22px;
+  --radius-label-inner: 14px;
+
+  /* Sombras: papel sobre papel, tintadas en cálido ------------------------- */
+  --shadow-paper: 0 1px 0 rgb(31 29 27 / 0.04), 0 18px 34px -24px rgb(84 62 36 / 0.34);
+  --shadow-paper-lift: 0 1px 0 rgb(31 29 27 / 0.05), 0 30px 50px -28px rgb(84 62 36 / 0.42);
+  --shadow-float: 0 10px 30px -10px rgb(31 29 27 / 0.35);
+
+  /* Motion ----------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-ink: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-press: 140ms;
+  --duration-ui: 220ms;
+  --duration-reveal: 640ms;
+
+  /* Breakpoints: móvil < 640 · tablet 768 · laptop 1024 · desktop 1280 · wide 1600 */
+  --breakpoint-wide: 100rem;
+}
+
+:root {
+  /* Capas (z-index): únicas permitidas en el proyecto */
+  --z-raised: 1;
+  --z-ink: 2;
+  --z-nav: 40;
+  --z-float: 45;
+  --z-sheet: 50;
+  --z-skip: 60;
+  --nav-h: 4rem;
+  /* Ancho de contenido del .frame (para tipografía que llena el ancho) */
+  --frame-w: min(100vw - 2 * var(--spacing-gutter), 90rem);
+  color-scheme: light;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    scroll-padding-top: calc(var(--nav-h) + 1rem);
     -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-champagne-deep) var(--color-stock);
+    background: var(--color-stock);
   }
   body {
-    background: var(--color-ivory);
+    background: var(--color-stock);
     color: var(--color-ink);
     font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    font-kerning: normal;
+    caret-color: var(--color-sage);
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   ::selection {
-    background: var(--color-champagne);
-    color: var(--color-charcoal);
+    background: var(--color-sage);
+    color: var(--color-stock);
   }
   :focus-visible {
-    outline: 1.5px solid var(--color-charcoal);
+    outline: 2px solid var(--color-charcoal);
     outline-offset: 3px;
-    border-radius: 2px;
+  }
+  a {
+    text-underline-offset: 0.22em;
+    text-decoration-thickness: 1px;
   }
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
   }
 }
 
 @layer components {
-  .container-x {
+  /* Contenedor: 1440px de contenido con medianil fluido */
+  .frame {
     width: 100%;
-    max-width: 84rem;
+    max-width: calc(90rem + 2 * var(--spacing-gutter));
     margin-inline: auto;
-    padding-inline: 1.5rem;
+    padding-inline: max(var(--spacing-gutter), env(safe-area-inset-left), env(safe-area-inset-right));
   }
-  @media (min-width: 768px) {
-    .container-x {
-      padding-inline: 2.5rem;
-    }
-  }
-  @media (min-width: 1280px) {
-    .container-x {
-      padding-inline: 4rem;
-    }
-  }
-  .eyebrow {
+
+  /* Nombres de campo de etiqueta: Archivo expandido en versalitas */
+  .field-label {
     font-family: var(--font-sans);
-    font-size: 0.6875rem;
+    font-stretch: 125%;
     font-weight: 600;
-    letter-spacing: 0.28em;
+    font-size: var(--text-label);
+    line-height: 1.4;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--color-muted);
   }
+
+  /* Wordmark AROMATIC */
   .wordmark {
-    font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-  }
-  .display {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
+    font-stretch: 125%;
     font-weight: 400;
-    line-height: 1.02;
-    letter-spacing: -0.015em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
     color: var(--color-charcoal);
+    letter-spacing: -0.012em;
   }
-  .hairline {
+
+  /* Doble filete horizontal (bajo el mástil y en bandas de etiqueta) */
+  .double-rule {
+    height: 4px;
+    border-block: 1px solid currentColor;
+  }
+
+  /* Panel de etiqueta: papel marfil, troquel y doble filete interior */
+  .label-stock {
+    position: relative;
+    isolation: isolate;
+    background: var(--color-ivory);
+    border-radius: var(--radius-label);
+    box-shadow: var(--shadow-paper);
+  }
+  .label-stock::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid var(--color-rule-strong);
+    outline: 1px solid var(--color-rule-strong);
+    outline-offset: 2px;
+    border-radius: var(--radius-label-inner);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: var(--z-raised);
+  }
+
+  /* Botones: sello de tinta */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0 1.75rem;
+    border-radius: var(--radius-ink);
+    font-family: var(--font-sans);
+    font-stretch: 112%;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    text-align: center;
+    text-transform: uppercase;
+    padding-block: 0.75rem;
+    transition:
+      transform var(--duration-press) var(--ease-out),
+      background-color var(--duration-ui) ease,
+      color var(--duration-ui) ease,
+      box-shadow var(--duration-ui) ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  @media (max-width: 39.99rem) {
+    .btn {
+      padding-inline: 1.125rem;
+      gap: 0.625rem;
+      letter-spacing: 0.09em;
+    }
+  }
+  @media (min-width: 40rem) {
+    .btn {
+      white-space: nowrap;
+    }
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-ink {
+    background: var(--color-charcoal);
+    color: var(--color-stock);
+  }
+  .btn-sage {
+    background: var(--color-sage);
+    color: var(--color-stock);
+  }
+  .btn-outline {
+    color: var(--color-charcoal);
+    box-shadow: inset 0 0 0 1px var(--color-charcoal);
+  }
+  .btn .btn-arrow {
+    transition: transform var(--duration-ui) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-ink:hover {
+      background: #3a3631;
+    }
+    .btn-sage:hover {
+      background: #3f4f3c;
+    }
+    .btn-outline:hover {
+      background: var(--color-charcoal);
+      color: var(--color-stock);
+    }
+    .btn:hover .btn-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  /* Enlace con filete que se dibuja */
+  .ink-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    font-family: var(--font-sans);
+    font-stretch: 112%;
+    font-weight: 600;
+    font-size: 0.8125rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-charcoal);
+    text-decoration: none;
+  }
+  .ink-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0.55rem;
     height: 1px;
-    background: var(--color-line);
+    background: currentColor;
+    transform-origin: left;
+    transition: transform var(--duration-ui) var(--ease-out);
   }
-  /* Carrusel horizontal nativo para móvil */
-  .snap-row {
-    scroll-snap-type: x mandatory;
+  @media (hover: hover) and (pointer: fine) {
+    .ink-link:hover::after {
+      transform: scaleX(0.35);
+    }
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .expanded {
+    font-stretch: 125%;
+  }
+  .no-scrollbar {
     scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
   }
-  .snap-row::-webkit-scrollbar {
+  .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  .grain {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.12 0 0 0 0 0.11 0 0 0 0 0.1 0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/*
+ * Coreografía de carga (CSS, fuera del hilo principal).
+ * El contenido es visible por defecto; solo se anima si el usuario no pidió
+ * reducir el movimiento.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .ink-in {
+    animation: ink-in var(--duration-reveal) var(--ease-ink) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .rise-in {
+    animation: rise-in 720ms var(--ease-ink) both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .rule-in {
+    animation: rule-in 700ms var(--ease-in-out) both;
+    animation-delay: var(--delay, 0ms);
+    transform-origin: left;
+  }
+}
+
+@keyframes ink-in {
+  from {
+    clip-path: inset(100% -5% -25% -5%);
+    transform: translateY(0.4em);
+  }
+  to {
+    clip-path: inset(-20% -5% -25% -5%);
+    transform: none;
+  }
+}
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rule-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ============================================================================
+ *  Navegación
+ * ========================================================================== */
+.site-nav {
+  background: color-mix(in srgb, var(--color-stock) 94%, transparent);
+  box-shadow: 0 1px 0 var(--color-rule);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  padding-top: env(safe-area-inset-top);
+}
+.nav-link {
+  position: relative;
+  transition: color var(--duration-ui) ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0.2em;
+  bottom: 0.45rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+.nav-wordmark:focus-visible {
+  opacity: 1 !important;
+}
+
+/* ============================================================================
+ *  Hero · mástil de etiqueta
+ * ========================================================================== */
+.masthead {
+  position: relative;
+  z-index: var(--z-ink);
+  font-size: calc(var(--frame-w) * 0.1372);
+  font-weight: 380;
+  line-height: 0.8;
+  letter-spacing: 0.07em;
+  margin: clamp(0.75rem, 2.4vw, 2rem) -0.07em clamp(0.6rem, 1.5vw, 1.4rem) 0;
+  white-space: nowrap;
+  transform-origin: 50% 0;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.75rem;
+  padding-top: 1.25rem;
+  padding-bottom: var(--spacing-band);
+}
+.hero-copy {
+  min-width: 0;
+}
+.hero-title {
+  font-size: clamp(2.25rem, calc(var(--frame-w) * 0.094), 3.75rem);
+  line-height: 1.04;
+}
+.hero-plate {
+  order: -1;
+  position: relative;
+  z-index: var(--z-raised);
+}
+.hero-plate-panel {
+  aspect-ratio: 16 / 11;
+  overflow: hidden;
+}
+.hero-plate-light {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 18% 0%, rgb(255 255 255 / 0.6), transparent 58%),
+    linear-gradient(to top, var(--color-linen) 0, var(--color-linen) 16%, transparent 16.2%),
+    linear-gradient(to bottom, var(--color-cream), var(--color-ivory));
+}
+.hero-plate-group {
+  position: absolute;
+  inset: 12% 9% 13% 9%;
+}
+@media (min-width: 48rem) {
+  .hero-plate-panel {
+    aspect-ratio: 16 / 9;
+  }
+  .hero-plate-group {
+    inset: 10% 22% 13% 22%;
+  }
+}
+@media (min-width: 64rem) {
+  .hero-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    padding-top: 0;
+  }
+  .hero-copy {
+    grid-column: 1 / span 8;
+    padding-top: clamp(2.25rem, 4vw, 4rem);
+  }
+  .hero-title {
+    font-size: calc(var(--frame-w) * 0.0515);
+  }
+  .hero-plate {
+    order: 0;
+    grid-column: 9 / span 4;
+    margin-top: calc(var(--frame-w) * -0.064);
+  }
+  .hero-plate-panel {
+    aspect-ratio: 4 / 5;
+  }
+  .hero-plate-group {
+    inset: 14% 7% 13% 7%;
+  }
+}
+
+/* Acople ligado al scroll: el mástil cede y el wordmark del nav aparece. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .site-nav[data-variant="home"] {
+      animation: nav-paper linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 140px;
+    }
+    .site-nav[data-variant="home"] .nav-wordmark {
+      animation: nav-mark linear both;
+      animation-timeline: scroll(root);
+      animation-range: 22vh 38vh;
+    }
+    .masthead {
+      animation: masthead-dock linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 38vh;
+    }
+    .hero-plate {
+      animation: plate-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+    .hero-plate-group .group-front > * {
+      animation: front-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100vh;
+    }
+  }
+}
+@keyframes nav-paper {
+  from {
+    background-color: transparent;
+    box-shadow: 0 1px 0 transparent;
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+  }
+}
+@keyframes nav-mark {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes masthead-dock {
+  to {
+    opacity: 0.18;
+    transform: translateY(-14px) scale(0.985);
+  }
+}
+@keyframes plate-drift {
+  to {
+    transform: translateY(-36px);
+  }
+}
+@keyframes front-drift {
+  to {
+    transform: translateY(-14px);
+  }
+}
+
+/* ============================================================================
+ *  Revelados al entrar en pantalla (una vez). RevealObserver añade .is-revealed.
+ *  Solo se ocultan si hay JS (html[data-js]) y no se pidió reducir movimiento.
+ * ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  [data-js] .reveal {
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
+  }
+  [data-js] .reveal:not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  [data-js] .reveal-ink {
+    transition:
+      clip-path 760ms var(--ease-ink),
+      transform 760ms var(--ease-ink);
+    clip-path: inset(-20% -5% -25% -5%);
+  }
+  [data-js] .reveal-ink:not(.is-revealed) {
+    clip-path: inset(100% -5% -25% -5%);
+    transform: translateY(0.35em);
+  }
+}
+
+/* ============================================================================
+ *  Más que limpieza · índice
+ * ========================================================================== */
+.concept-row {
+  display: grid;
+  grid-template-columns: 2.75rem minmax(0, 1fr);
+  column-gap: 1rem;
+  row-gap: 1.25rem;
+  align-items: baseline;
+  padding-block: clamp(1.75rem, 1.2rem + 2vw, 3rem);
+  border-top: 1px solid var(--color-rule);
+}
+.concept-row:last-child {
+  border-bottom: 1px solid var(--color-rule);
+}
+.concept-word {
+  overflow-wrap: anywhere;
+  font-size: var(--text-index);
+  line-height: var(--text-index--line-height);
+  letter-spacing: -0.025em;
+}
+.concept-copy {
+  grid-column: 1 / -1;
+}
+@media (min-width: 48rem) {
+  .concept-copy {
+    grid-column: 2 / -1;
+  }
+}
+@media (min-width: 64rem) {
+  .concept-row {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+  .concept-row > :first-child {
+    grid-column: 1 / span 1;
+  }
+  .concept-word {
+    grid-column: 2 / span 6;
+  }
+  .concept-copy {
+    grid-column: 8 / span 5;
+    align-self: end;
+  }
+}
+
+/* ============================================================================
+ *  Descubre AROMATIC · vitrina de etiquetas
+ * ========================================================================== */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.25rem, 0.8rem + 1.6vw, 2rem);
+}
+@media (min-width: 64rem) {
+  .showcase-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+  .showcase-feature {
+    grid-column: 1 / span 7;
+    grid-row: span 2;
+  }
+  .showcase-item {
+    grid-column: 8 / span 5;
+  }
+  .showcase-item:nth-child(n + 4) {
+    grid-column: span 6;
+  }
+}
+.product-label {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  transition:
+    transform 260ms var(--ease-out),
+    box-shadow 260ms var(--ease-out);
+}
+.product-label-plate {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-label-inner);
+  background:
+    radial-gradient(110% 80% at 25% 10%, rgb(255 255 255 / 0.65), transparent 60%),
+    linear-gradient(to top, color-mix(in oklab, var(--plate-tint) 70%, var(--color-linen)) 0 14%, transparent 14.2%),
+    color-mix(in oklab, var(--plate-tint) 38%, var(--color-ivory));
+  aspect-ratio: 4 / 3;
+}
+/* El envase se apoya sobre la "mesa" de la placa, centrado y a altura fija. */
+.product-label-visual {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  height: 76%;
+  width: auto;
+  max-width: 84%;
+  translate: -50% 0;
+  transform-origin: 50% 100%;
+  transition: transform 300ms var(--ease-out);
+}
+div.product-label-visual {
+  width: 84%;
+}
+.product-label-body {
+  min-width: 0;
+  overflow-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: clamp(1.25rem, 0.9rem + 1.4vw, 2rem) clamp(1rem, 0.7rem + 1.2vw, 1.75rem) clamp(1.25rem, 0.9rem + 1vw, 1.75rem);
+}
+.product-label-link {
+  text-decoration: none;
+}
+.product-label-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-ink);
+  border-radius: var(--radius-label);
+}
+.product-label-link:focus-visible {
+  outline: none;
+}
+.product-label:has(.product-label-link:focus-visible) {
+  outline: 2px solid var(--color-charcoal);
+  outline-offset: 4px;
+}
+.product-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-rule);
+}
+.product-label-cta-row {
+  margin-top: auto;
+  padding-top: 1.25rem;
+}
+.product-label:active {
+  transform: scale(0.99);
+}
+@media (hover: hover) and (pointer: fine) {
+  .product-label:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-paper-lift);
+  }
+  .product-label:hover .product-label-visual {
+    transform: scale(1.035);
+  }
+  .product-label:hover .btn-arrow {
+    transform: translateX(4px);
+  }
+}
+.product-label.is-feature .product-label-plate {
+  aspect-ratio: 16 / 11;
+}
+.product-label.is-feature .product-label-visual {
+  height: 80%;
+}
+@media (min-width: 40rem) {
+  .product-label.is-compact {
+    flex-direction: row;
+  }
+  .product-label.is-compact .product-label-plate {
+    width: 42%;
+    flex: none;
+    aspect-ratio: auto;
+    min-height: 18rem;
+  }
+  .product-label.is-compact .product-label-visual {
+    height: 62%;
+  }
+}
+@media (min-width: 64rem) {
+  .product-label.is-feature .product-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================================================
+ *  Encuentra tu aroma · campo champagne con etiqueta viva
+ * ========================================================================== */
+.aromas-field {
+  background: var(--color-champagne);
+}
+.aromas-field .display {
+  color: var(--color-charcoal);
+}
+.aromas-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-band);
+}
+@media (min-width: 64rem) {
+  .aromas-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .aromas-intro {
+    grid-column: 1 / span 5;
+  }
+  .aroma-label {
+    grid-column: 7 / span 6;
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+  }
+}
+.aroma-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+.aroma-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  min-height: 4.25rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-ink);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-bronze) 35%, transparent);
+  color: var(--color-bronze);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-ui) ease,
+    color var(--duration-ui) ease,
+    box-shadow var(--duration-ui) ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.aroma-option-name {
+  overflow-wrap: anywhere;
+  font-size: 1.375rem;
+  line-height: 1.1;
+  color: inherit !important;
+}
+.aroma-option-count {
+  white-space: nowrap;
+}
+.aroma-option[data-selected] {
+  background: var(--color-ivory);
+  color: var(--color-charcoal);
+  box-shadow: inset 0 0 0 1px var(--color-charcoal);
+}
+.aroma-option:has(input:focus-visible) {
+  outline: 2px solid var(--color-charcoal);
+  outline-offset: 3px;
+}
+.aroma-option:active {
+  transform: scale(0.98);
+}
+@media (hover: hover) and (pointer: fine) {
+  .aroma-option:not([data-selected]):hover {
+    color: var(--color-charcoal);
+    box-shadow: inset 0 0 0 1px var(--color-charcoal);
+  }
+}
+@media (min-width: 64rem) {
+  .aroma-options {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    border-top: 1px solid color-mix(in oklab, var(--color-bronze) 30%, transparent);
+  }
+  .aroma-option {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    min-height: 4.5rem;
+    padding: 0.75rem 0.25rem 0.75rem 1.5rem;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid color-mix(in oklab, var(--color-bronze) 30%, transparent);
+    background: transparent !important;
+  }
+  .aroma-option::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0.75rem;
+    height: 1px;
+    background: var(--color-sage);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-ui) var(--ease-out);
+  }
+  .aroma-option[data-selected]::before {
+    transform: scaleX(1);
+  }
+  .aroma-option[data-selected] {
+    box-shadow: none;
+  }
+  .aroma-option-name {
+    font-size: clamp(1.75rem, 1rem + 1.4vw, 2.375rem);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .aroma-option:not([data-selected]):hover {
+      box-shadow: none;
+    }
+  }
+}
+.aroma-label {
+  overflow: hidden;
+}
+.aroma-label-band {
+  height: 0.875rem;
+  transition: background-color 360ms ease;
+}
+.aroma-label-inner {
+  padding: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+}
+.aroma-label-name {
+  font-size: clamp(3rem, 2rem + 4vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: 0.5rem;
+  overflow-wrap: anywhere;
+}
+.aroma-label-bottles {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(0.25rem, 1vw, 1rem);
+  height: clamp(9rem, 6rem + 8vw, 14rem);
+  margin-top: 1.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-rule);
+}
+.aroma-bottle {
+  height: 100%;
+  width: auto;
+}
+.aroma-bottle.is-pump {
+  height: 92%;
+}
+div.aroma-bottle {
+  width: 30%;
+}
+.aroma-product + .aroma-product {
+  border-top: 1px solid var(--color-rule);
+}
+.aroma-product-link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 1rem;
+  padding-block: 0.875rem;
+  text-decoration: none;
+}
+.aroma-product-link > :nth-child(2) {
+  grid-row: 2;
+}
+.aroma-product-arrow {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  transition: transform var(--duration-ui) var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .aroma-product-link:hover .aroma-product-arrow {
+    transform: translateX(4px);
+  }
+}
+
+/* ============================================================================
+ *  Sobre AROMATIC
+ * ========================================================================== */
+.brand-statement {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+}
+.brand-statement h2 {
+  max-width: 16ch;
+}
+.brand-copy {
+  max-width: 44ch;
+}
+@media (min-width: 64rem) {
+  .brand-statement {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+  }
+  .brand-statement h2 {
+    grid-column: 1 / span 8;
+  }
+  .brand-copy {
+    grid-column: 1 / span 6;
+  }
+}
+.brand-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding: 10px;
+}
+.brand-field {
+  padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem) clamp(1.25rem, 0.8rem + 1.5vw, 2.25rem);
+}
+.brand-field + .brand-field {
+  border-top: 1px solid var(--color-rule);
+}
+@media (min-width: 48rem) {
+  .brand-band {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .brand-field + .brand-field {
+    border-top: 0;
+    border-left: 1px solid var(--color-rule);
+  }
+}
+
+/* ============================================================================
+ *  Pieza editorial
+ * ========================================================================== */
+.editorial {
+  position: relative;
+  overflow: clip;
+  background: var(--color-linen);
+}
+.editorial-frame {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  padding-top: var(--spacing-section);
+}
+.editorial-title {
+  position: relative;
+  z-index: var(--z-ink);
+  font-size: clamp(3rem, 1.2rem + 7.6vw, 9rem);
+  line-height: 0.96;
+  letter-spacing: -0.03em;
+}
+.editorial-line {
+  display: block;
+  white-space: nowrap;
+}
+.editorial-line.is-b {
+  padding-left: 12%;
+}
+.editorial-copy {
+  position: relative;
+  z-index: var(--z-ink);
+  margin-top: 2.5rem;
+  padding-bottom: 2rem;
+}
+.editorial-still {
+  position: relative;
+  justify-self: end;
+  width: min(78%, 26rem);
+  margin-top: -2rem;
+  margin-bottom: -18%;
+}
+.editorial-bottle {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+div.editorial-bottle {
+  aspect-ratio: 4 / 5;
+}
+@media (min-width: 64rem) {
+  .editorial-frame {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    min-height: min(54rem, 100dvh);
+  }
+  .editorial-title {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .editorial-copy {
+    grid-column: 1 / span 5;
+    grid-row: 2;
+    align-self: end;
+    padding-bottom: var(--spacing-section);
+  }
+  .editorial-still {
+    grid-column: 7 / span 6;
+    grid-row: 1 / span 2;
+    align-self: end;
+    width: 100%;
+    max-width: 38rem;
+    margin: 0 0 -11% 0;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .editorial-line.is-a,
+    .editorial-line.is-c {
+      animation: drift-left linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .editorial-line.is-b {
+      animation: drift-right linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .editorial-still {
+      animation: still-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 60%;
+    }
+  }
+}
+@keyframes drift-left {
+  from {
+    transform: translateX(2vw);
+  }
+  to {
+    transform: translateX(-0.5vw);
+  }
+}
+@keyframes drift-right {
+  from {
+    transform: translateX(-0.5vw);
+  }
+  to {
+    transform: translateX(2vw);
+  }
+}
+@keyframes still-rise {
+  from {
+    transform: translateY(8%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* ============================================================================
+ *  Nota de pedido
+ * ========================================================================== */
+.order-slip {
+  max-width: 44rem;
+  padding: clamp(1.75rem, 1.2rem + 2vw, 3rem) clamp(1.25rem, 0.8rem + 2vw, 3rem);
+}
+.order-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+@media (min-width: 40rem) {
+  .order-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.order-field {
+  display: grid;
+  gap: 0.5rem;
+}
+.order-field select {
+  appearance: none;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0 2rem 0 0;
+  border: 0;
+  border-bottom: 1px solid var(--color-charcoal);
+  border-radius: 0;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--color-charcoal) 50%) calc(100% - 9px) 55% / 5px 5px no-repeat,
+    linear-gradient(-45deg, transparent 50%, var(--color-charcoal) 50%) calc(100% - 4px) 55% / 5px 5px no-repeat;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  color: var(--color-charcoal);
+  cursor: pointer;
+}
+.order-field select:disabled {
+  opacity: 1;
+  cursor: default;
+  background: none;
+  border-bottom-color: var(--color-rule-strong);
+}
+.order-field select:focus-visible {
+  outline: 2px solid var(--color-charcoal);
+  outline-offset: 4px;
+}
+
+/* ============================================================================
+ *  Pie
+ * ========================================================================== */
+.site-footer {
+  background: var(--color-stock);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem;
+  padding-bottom: var(--spacing-band);
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 2rem;
+}
+@media (min-width: 64rem) {
+  .footer-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: end;
+  }
+  .footer-grid > :first-child {
+    grid-column: 1 / span 6;
+  }
+  .footer-grid > :nth-child(2) {
+    grid-column: 7 / span 6;
+    justify-self: end;
+  }
+  .footer-grid > :nth-child(3) {
+    grid-column: 7 / span 6;
+    justify-self: end;
+  }
+}
+.footer-mark {
+  font-size: calc(var(--frame-w) * 0.1372);
+  font-weight: 380;
+  letter-spacing: 0.07em;
+  margin-right: -0.07em;
+  line-height: 0.8;
+  white-space: nowrap;
+  padding-bottom: clamp(0.6rem, 1.5vw, 1.4rem);
+}
+
+/* ============================================================================
+ *  Botón flotante de WhatsApp
+ *  El contenedor aparece con el scroll (CSS); el botón se retira (data-muted)
+ *  mientras otro botón de WhatsApp está en pantalla.
+ * ========================================================================== */
+.wa-float-wrap {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: var(--z-float);
+}
+.wa-float {
+  width: 3.5rem;
+  height: 3.5rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: var(--radius-ink);
+  box-shadow: var(--shadow-float);
+  transition:
+    transform var(--duration-ui) var(--ease-out),
+    opacity var(--duration-ui) ease,
+    visibility 0s linear 0s,
+    background-color var(--duration-ui) ease;
+}
+.wa-float[data-muted] {
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 160ms var(--ease-out),
+    opacity 160ms ease,
+    visibility 0s linear 160ms;
+}
+@media (min-width: 64rem) {
+  .wa-float {
+    width: auto;
+    padding: 0 1.5rem 0 1.25rem;
+  }
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .wa-float-wrap {
+      animation: float-in linear both;
+      animation-timeline: scroll(root);
+      animation-range: 55vh 75vh;
+    }
+  }
+}
+@keyframes float-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+  }
+}
+
+/* ============================================================================
+ *  Detalle de producto
+ * ========================================================================== */
+.detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--spacing-band);
+}
+.detail-plate-panel {
+  padding: 10px;
+}
+.detail-plate {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-label-inner);
+  background:
+    radial-gradient(110% 80% at 25% 8%, rgb(255 255 255 / 0.7), transparent 60%),
+    linear-gradient(to top, color-mix(in oklab, var(--plate-tint) 70%, var(--color-linen)) 0 13%, transparent 13.2%),
+    color-mix(in oklab, var(--plate-tint) 40%, var(--color-ivory));
+}
+.detail-visual-wrap {
+  position: absolute;
+  inset: 0;
+}
+.detail-visual {
+  position: absolute;
+  left: 50%;
+  bottom: 8%;
+  height: 78%;
+  width: auto;
+  max-width: 86%;
+  translate: -50% 0;
+}
+div.detail-visual {
+  width: 86%;
+}
+.detail-options {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2.25rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-rule);
+}
+.option-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.option-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.875rem;
+  padding: 0 1.125rem;
+  border-radius: var(--radius-ink);
+  box-shadow: inset 0 0 0 1px var(--color-rule-strong);
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition:
+    background-color var(--duration-ui) ease,
+    color var(--duration-ui) ease,
+    box-shadow var(--duration-ui) ease,
+    transform var(--duration-press) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+.option-chip[data-selected] {
+  background: var(--color-charcoal);
+  color: var(--color-stock);
+  box-shadow: inset 0 0 0 1px var(--color-charcoal);
+}
+.option-chip:has(input:focus-visible) {
+  outline: 2px solid var(--color-charcoal);
+  outline-offset: 3px;
+}
+.option-chip:active {
+  transform: scale(0.97);
+}
+@media (hover: hover) and (pointer: fine) {
+  .option-chip:not([data-selected]):hover {
+    box-shadow: inset 0 0 0 1px var(--color-charcoal);
+  }
+}
+.detail-spec {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-rule);
+}
+.detail-spec {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+}
+.detail-spec > div {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+@media (min-width: 64rem) {
+  .detail-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .detail-media {
+    grid-column: 1 / span 7;
+    position: sticky;
+    top: calc(var(--nav-h) + 1.5rem);
+  }
+  .detail-info {
+    grid-column: 8 / span 5;
+    padding-top: 0.5rem;
+  }
+  .detail-plate {
+    aspect-ratio: 5 / 6;
+    max-height: calc(100dvh - var(--nav-h) - 4rem);
+    width: 100%;
+  }
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(1.25rem, 0.8rem + 1.6vw, 2rem);
+}
+@media (min-width: 64rem) {
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

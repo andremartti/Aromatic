@@ -7,7 +7,7 @@
  * sin tocar los componentes visuales.
  */
 import type { Fragrance, Presentation, Product } from "@/products/types";
-import { formatPrice } from "./format";
+import { presentationPrice } from "./format";
 import { whatsappLink } from "./whatsapp";
 import { site } from "@/config/site";
 
@@ -37,18 +37,19 @@ function availabilityFromStock(p: Presentation): Availability {
   return p.stock > 0 ? "available" : "out_of_stock";
 }
 
+function describeLine(line: CartLine): string {
+  const qty = line.quantity > 1 ? `${line.quantity} x ` : "";
+  // El precio solo aparece si los precios están activos (features.prices).
+  const price = presentationPrice(line.presentation);
+  return `${qty}${line.product.name}, aroma ${line.fragrance.name}, presentación ${line.presentation.label}${price ? ` (${price})` : ""}`;
+}
+
 export const whatsappCommerce: CommerceProvider = {
   ctaLabel: "Comprar por WhatsApp",
   availability: availabilityFromStock,
   checkoutUrl(lines) {
-    const detail = lines
-      .map(
-        (l) =>
-          `• ${l.quantity} × ${l.product.name} — ${l.presentation.label}, aroma ${l.fragrance.name}` +
-          (formatPrice(l.presentation.price) ? ` (${formatPrice(l.presentation.price)} c/u)` : ""),
-      )
-      .join("\n");
-    return whatsappLink(`Hola ${site.name}, quiero hacer este pedido:\n${detail}\n\n¿Me confirman disponibilidad?`);
+    const detail = lines.map((l) => `- ${describeLine(l)}`).join("\n");
+    return whatsappLink(`Hola ${site.name}, quiero comprar:\n${detail}\n\n¿Me confirman disponibilidad?`);
   },
 };
 

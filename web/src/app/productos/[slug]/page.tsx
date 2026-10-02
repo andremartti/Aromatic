@@ -8,8 +8,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ProductDetail } from "@/components/ProductDetail";
-import { ProductLabel } from "@/components/ProductLabel";
+import { SceneStage } from "@/components/SceneStage";
 import { JsonLd } from "@/components/JsonLd";
+import { ArrowIcon } from "@/components/icons";
 
 interface Params {
   params: Promise<{ slug: string }>;
@@ -24,7 +25,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const product = getProductBySlug((await params).slug);
   if (!product) return {};
-  const description = `${product.description} Aroma: ${joinList(product.fragrances.map((f) => f.name))}. Presentación: ${joinList(
+  const description = `${product.summary} Aroma: ${joinList(product.fragrances.map((f) => f.name))}. Presentación: ${joinList(
     product.presentations.map((p) => p.label),
   )}.`;
   return {
@@ -43,27 +44,23 @@ export default async function ProductPage({ params }: Params) {
   return (
     <>
       <JsonLd data={productJsonLd(product)} />
-      <Navbar variant="page" />
+      <Navbar />
       <main id="contenido" className="pt-(--nav-h)">
         <div className="frame">
-          <nav aria-label="Ruta de navegación" className="pt-6 pb-8 lg:pt-10 lg:pb-12">
-            <ol className="field-label flex flex-wrap items-center gap-x-3 gap-y-1 text-muted">
+          <nav aria-label="Ruta de navegación" className="py-6">
+            <ol className="flex flex-wrap items-center gap-x-3 text-small text-warm-gray">
               <li>
                 <Link href="/" className="inline-flex min-h-11 items-center hover:text-charcoal">
                   Inicio
                 </Link>
               </li>
-              <li aria-hidden="true" className="text-rule-strong">
-                /
-              </li>
+              <li aria-hidden="true">/</li>
               <li>
                 <Link href="/#productos" className="inline-flex min-h-11 items-center hover:text-charcoal">
                   Productos
                 </Link>
               </li>
-              <li aria-hidden="true" className="text-rule-strong">
-                /
-              </li>
+              <li aria-hidden="true">/</li>
               <li aria-current="page" className="text-charcoal">
                 {product.shortName}
               </li>
@@ -72,20 +69,31 @@ export default async function ProductPage({ params }: Params) {
           <ProductDetail product={product} />
         </div>
 
-        {others.length > 0 ? (
-          <section className="py-section" aria-labelledby="otros-title">
-            <div className="frame">
-              <h2 id="otros-title" className="display text-heading">
-                También de AROMATIC
-              </h2>
-              <div className="related-grid mt-band">
-                {others.map((p) => (
-                  <ProductLabel key={p.id} product={p} variant="compact" />
-                ))}
-              </div>
-            </div>
-          </section>
-        ) : null}
+        <section className="py-section" aria-labelledby="otros-title">
+          <div className="frame">
+            <h2 id="otros-title" className="serif reveal-text text-heading">
+              También de AROMATIC
+            </h2>
+            <ul className="mt-12 grid gap-10 sm:grid-cols-2">
+              {others.map((p) => (
+                <li key={p.id} className="reveal">
+                  <Link href={`/productos/${p.slug}/`} className="related-card group">
+                    <div className="related-stage">
+                      <div className="related-media absolute inset-0">
+                        <SceneStage products={PRODUCTS} focusId={p.id} shot={p.scene.shot} className="absolute inset-0" sizes="600px" />
+                      </div>
+                    </div>
+                    <p className="eyebrow mt-6">{p.use}</p>
+                    <p className="serif mt-2 flex items-center justify-between gap-4 text-title">
+                      {p.shortName}
+                      <ArrowIcon className="size-5 shrink-0 transition-transform duration-500 group-hover:translate-x-1" />
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </main>
       <Footer />
       <WhatsAppButton />

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 /**
- * Revela una sola vez los elementos .reveal / .reveal-ink al entrar en
+ * Revela una sola vez los elementos .reveal, .reveal-text, .reveal-side y .reveal-line al entrar en
  * pantalla. Un único IntersectionObserver para toda la página.
  *
  * El contenido es visible por defecto: solo se oculta antes de revelarse si
@@ -15,16 +15,18 @@ export function RevealObserver() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(".reveal:not(.is-revealed), .reveal-ink:not(.is-revealed)");
+    const elements = document.querySelectorAll<HTMLElement>(
+      ".reveal:not(.is-revealed), .reveal-text:not(.is-revealed), .reveal-side:not(.is-revealed), .reveal-line:not(.is-revealed)",
+    );
     if (!("IntersectionObserver" in window)) {
       elements.forEach((el) => el.classList.add("is-revealed"));
       return;
     }
-    // .reveal-ink oculta su texto con clip-path, y IntersectionObserver mide la
-    // caja ya recortada (área cero): se observa su contenedor en su lugar.
+    // Los revelados con clip-path o scaleX(0) tienen área visible cero para
+    // IntersectionObserver: se observa su contenedor en su lugar.
     const targets = new Map<Element, HTMLElement[]>();
     elements.forEach((el) => {
-      const target = el.classList.contains("reveal-ink") ? (el.parentElement ?? el) : el;
+      const target = el.classList.contains("reveal") ? el : (el.parentElement ?? el);
       targets.set(target, [...(targets.get(target) ?? []), el]);
     });
     const observer = new IntersectionObserver(

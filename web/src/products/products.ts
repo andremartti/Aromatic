@@ -2,31 +2,19 @@
  * ============================================================================
  *  CATÁLOGO AROMATIC · ARCHIVO ÚNICO DE DATOS
  * ============================================================================
+ *  Productos, aromas, presentaciones, precios e imágenes se editan aquí.
+ *  Ningún componente contiene datos de producto propios.
  *
- *  Aquí se editan TODOS los productos, precios, aromas, presentaciones e
- *  imágenes. Ningún componente contiene datos de producto propios.
+ *  PRECIOS: hoy no se publican (`features.prices = false` en
+ *  src/config/site.ts). Para activarlos, escriba `price` en cada presentación
+ *  y active el interruptor. Los precios del catálogo impreso NO se cargaron.
  *
- *  PRECIOS
- *  - Hoy NO se publican precios: `features.prices` es `false` en
- *    src/config/site.ts y ningún precio se muestra, aunque exista.
- *  - Para publicarlos: escriba `price` en cada presentación (número en HNL) y
- *    active `features.prices`. Las tarjetas, el detalle y el mensaje de
- *    WhatsApp los mostrarán sin cambiar componentes.
- *  - Los precios del catálogo impreso son una referencia antigua y NO se
- *    cargaron aquí a propósito.
- *
- *  FOTOGRAFÍAS
- *  - Copie la foto a /public/images/products/ y ponga la ruta en `image`,
- *    por ejemplo: image: "/images/products/suavizante.jpg", y describa la
- *    foto en `imageAlt`.
- *  - Mientras `image` sea null se muestra una ilustración del envase.
- *
- *  NUEVOS PRODUCTOS
- *  - Agregue la categoría en CATEGORIES y un objeto nuevo en PRODUCTS.
- *    Toda la web (etiquetas, detalle, aromas, WhatsApp, sitemap) se actualiza.
+ *  IMÁGENES: la escena fotográfica oficial vive en src/config/scene.ts. Cada
+ *  producto define su encuadre (`scene.shot`), su zona (`scene.box`) y su
+ *  máscara de foco. `cutouts` lista fotos recortadas por aroma (solo cambia el
+ *  color del líquido; la etiqueta es la original).
  * ============================================================================
  */
-
 import { FRAGRANCES } from "./fragrances";
 import type { Category, CategoryId, Fragrance, Product } from "./types";
 
@@ -43,35 +31,48 @@ export const PRODUCTS: Product[] = [
     category: "suavizante",
     name: "AROMATIC Suavizante",
     shortName: "Suavizante",
-    shortDescription: "Suavidad y frescura con un perfume sutil y duradero.",
+    heroWord: "Suavizante",
+    use: "Para la ropa",
+    summary: "Producto enfocado en aportar suavidad y una agradable fragancia a las prendas.",
     description:
       "Suavizante líquido perfumado que proporciona sensación de suavidad y frescura, con un perfume agradable, sutil y duradero. También facilita el planchado.",
     fragrances: [FRAGRANCES.floral],
     presentations: [{ id: "galon", label: "Galón", sku: "SUA-GAL", price: null, stock: null }],
-    image: null,
-    visual: { shape: "jug", tint: "#e8d4cc" },
+    scene: {
+      shot: { cx: 167, cy: 738, z: 760 },
+      box: { x: 30, y: 395, w: 278, h: 688 },
+      mask: "/images/scene/mask-suavizante.png",
+    },
   },
   {
     id: "detergente",
     slug: "detergente-liquido",
     category: "detergente",
     name: "AROMATIC Detergente Líquido",
-    shortName: "Detergente líquido",
-    shortDescription: "Para todo tipo de ropa, enriquecido con jabón natural.",
+    shortName: "Detergente Líquido",
+    heroWord: "Detergente",
+    use: "Para la lavadora",
+    summary: "Detergente líquido para lavadora orientado a limpieza, frescura y cuidado de las prendas.",
     description:
       "Detergente líquido para lavadora, apto para todo tipo de ropa, con un agradable y duradero aroma. Su fórmula está enriquecida con jabón natural para ayudar a cuidar y alargar la vida de las prendas.",
     fragrances: [FRAGRANCES.floral],
     presentations: [{ id: "galon", label: "Galón", sku: "DET-GAL", price: null, stock: null }],
-    image: null,
-    visual: { shape: "jug", tint: "#d5ddd2" },
+    scene: {
+      shot: { cx: 421, cy: 732, z: 770 },
+      box: { x: 283, y: 380, w: 217, h: 700 },
+      mask: "/images/scene/mask-detergente.png",
+    },
+    featured: true,
   },
   {
     id: "jabon-manos",
     slug: "jabon-liquido",
     category: "jabon-manos",
     name: "AROMATIC Jabón Líquido",
-    shortName: "Jabón líquido",
-    shortDescription: "Limpieza de manos que ayuda a suavizar y humectar la piel.",
+    shortName: "Jabón Líquido",
+    heroWord: "Jabón",
+    use: "Para las manos",
+    summary: "Jabón líquido para la limpieza de manos, en seis aromas y tres presentaciones.",
     description:
       "Jabón líquido especialmente formulado para la limpieza de manos, con propiedades que ayudan a suavizar y humectar la piel.",
     fragrances: [
@@ -87,10 +88,19 @@ export const PRODUCTS: Product[] = [
       { id: "2l", label: "2 Litros", sku: "JAB-2L", price: null, stock: null },
       { id: "galon", label: "Galón", sku: "JAB-GAL", price: null, stock: null },
     ],
-    image: null,
-    featured: true,
-    // El catálogo muestra el galón con el mismo envase del suavizante.
-    visual: { shape: "pump", shapeByPresentation: { galon: "jug" }, tint: "#ead9c6" },
+    scene: {
+      shot: { cx: 598, cy: 872, z: 560 },
+      box: { x: 503, y: 645, w: 190, h: 456 },
+      mask: "/images/scene/mask-jabon.png",
+    },
+    cutouts: {
+      chicle: "/images/jabon/jabon-chicle.webp",
+      floral: "/images/jabon/jabon-floral.webp",
+      "frutas-tropicales": "/images/jabon/jabon-frutas-tropicales.webp",
+      coco: "/images/jabon/jabon-coco.webp",
+      cherry: "/images/jabon/jabon-cherry.webp",
+      fresh: "/images/jabon/jabon-fresh.webp",
+    },
   },
 ];
 
@@ -102,18 +112,13 @@ export function getCategory(id: CategoryId): Category | undefined {
   return CATEGORIES.find((c) => c.id === id);
 }
 
-/** Todos los aromas del catálogo, sin repetir, en orden de aparición. */
+/** Todos los aromas del catálogo, sin repetir. */
 export function allFragrances(): Fragrance[] {
   const seen = new Map<string, Fragrance>();
-  for (const product of PRODUCTS) {
-    for (const fragrance of product.fragrances) {
-      if (!seen.has(fragrance.id)) seen.set(fragrance.id, fragrance);
-    }
-  }
+  for (const product of PRODUCTS) for (const f of product.fragrances) if (!seen.has(f.id)) seen.set(f.id, f);
   return [...seen.values()];
 }
 
-/** Productos que se ofrecen en un aroma. */
 export function productsWithFragrance(fragranceId: string): Product[] {
   return PRODUCTS.filter((p) => p.fragrances.some((f) => f.id === fragranceId));
 }

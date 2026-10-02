@@ -10,14 +10,14 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
-      <Navbar variant="page" />
+      <Navbar />
       <main id="contenido" className="frame flex min-h-dvh flex-col justify-center pt-(--nav-h) pb-section">
-        <h1 className="display max-w-[16ch] text-heading">Esta página no existe.</h1>
-        <p className="mt-5 max-w-[40ch] text-lede text-muted">
+        <h1 className="serif max-w-[16ch] text-heading">Esta página no existe.</h1>
+        <p className="mt-5 max-w-[40ch] text-lede text-warm-gray">
           Puede que el enlace haya cambiado. Los productos y aromas siguen en la página principal.
         </p>
         <div className="mt-9">
-          <Link href="/" className="btn btn-ink">
+          <Link href="/" className="btn btn-solid">
             Volver al inicio
           </Link>
         </div>

@@ -1,42 +1,36 @@
 import localFont from "next/font/local";
 
 /**
- * Tipografías autoalojadas (sin peticiones a terceros), con precarga y
- * métricas de respaldo ajustadas por Next para evitar saltos de layout.
+ * Tipografías autoalojadas con precarga y métricas de respaldo (sin saltos).
  *
- * - Ibarra Real Nova: titulares y nombres de producto. Revival de los tipos
- *   del impresor español Joaquín Ibarra: herencia de imprenta en castellano.
- * - Archivo (variable, ejes de peso y ancho): texto, y en ancho expandido para
- *   el wordmark y los nombres de campo de las etiquetas.
+ * - Bodoni Moda (variable, eje óptico): serif de alto contraste, de la misma
+ *   familia formal que el logotipo AROMATIC impreso en las etiquetas reales.
+ *   Títulos, nombres de producto y frases editoriales.
+ * - Jost (variable): sans geométrica, emparentada con el texto en versalitas
+ *   de la etiqueta ("SUAVIZANTE"). Navegación, descripciones, botones y datos.
  */
-export const ibarra = localFont({
+export const bodoni = localFont({
   src: [
     {
-      path: "../../node_modules/@fontsource/ibarra-real-nova/files/ibarra-real-nova-latin-400-normal.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../node_modules/@fontsource/ibarra-real-nova/files/ibarra-real-nova-latin-500-normal.woff2",
-      weight: "500",
+      path: "../../node_modules/@fontsource-variable/bodoni-moda/files/bodoni-moda-latin-opsz-normal.woff2",
+      weight: "400 900",
       style: "normal",
     },
   ],
-  variable: "--font-ibarra",
+  variable: "--font-bodoni",
   display: "swap",
-  fallback: ["Iowan Old Style", "Georgia", "serif"],
+  fallback: ["Didot", "Georgia", "serif"],
 });
 
-export const archivo = localFont({
+export const jost = localFont({
   src: [
     {
-      path: "../../node_modules/@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2",
+      path: "../../node_modules/@fontsource-variable/jost/files/jost-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
   ],
-  declarations: [{ prop: "font-stretch", value: "62% 125%" }],
-  variable: "--font-archivo",
+  variable: "--font-jost",
   display: "swap",
-  fallback: ["ui-sans-serif", "system-ui", "Segoe UI", "sans-serif"],
+  fallback: ["Futura", "ui-sans-serif", "system-ui", "sans-serif"],
 });

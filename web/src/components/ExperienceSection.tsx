@@ -1,71 +1,124 @@
+"use client";
+
 import Link from "next/link";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
+import { PRODUCTS, allFragrances } from "@/products/products";
+import type { Shot } from "@/config/scene";
+import { site } from "@/config/site";
+import { joinList } from "@/lib/format";
+import { SceneStage } from "./SceneStage";
+import { ArrowIcon } from "./icons";
+
+const EASE_FLOW = [0.22, 1, 0.36, 1] as const;
+
+const byId = (id: string) => PRODUCTS.find((p) => p.id === id)!;
+
+/** Limpieza → Suavidad → Fragancia, con la cámara en primer plano de cada etiqueta. */
+const CONCEPTS: { n: string; word: string; productId: string; shot: Shot; text: () => string }[] = [
+  {
+    n: "01",
+    word: "Limpieza",
+    productId: "detergente",
+    shot: { cx: 420, cy: 868, z: 300 },
+    text: () => byId("detergente").summary,
+  },
+  {
+    n: "02",
+    word: "Suavidad",
+    productId: "suavizante",
+    shot: { cx: 166, cy: 862, z: 300 },
+    text: () => byId("suavizante").summary,
+  },
+  {
+    n: "03",
+    word: "Fragancia",
+    productId: "jabon-manos",
+    shot: { cx: 597, cy: 948, z: 240 },
+    text: () => {
+      const floral = PRODUCTS.filter((p) => p.fragrances.length === 1).map((p) => p.shortName.toLowerCase());
+      const many = PRODUCTS.find((p) => p.fragrances.length > 1);
+      return `Floral en ${joinList(floral)}. ${many ? `${many.shortName}: ${joinList(allFragrances().map((f) => f.name))}.` : ""}`;
+    },
+  },
+];
 
 /**
- * "Más que limpieza.": índice editorial de los tres conceptos de la marca.
- * Cada concepto se sostiene solo con lo que dice el catálogo y enlaza a los
- * productos que lo cumplen.
+ * "Más que limpieza." Narración ligada al scroll: el concepto activo toma
+ * protagonismo y la cámara pasa a la etiqueta del producto que lo cumple.
  */
-const CONCEPTS = [
-  {
-    number: "01",
-    word: "Limpieza",
-    text: "Detergente líquido para lavadora, apto para todo tipo de ropa y enriquecido con jabón natural. Jabón líquido formulado para la limpieza de manos.",
-    links: [
-      { href: "/productos/detergente-liquido/", label: "Detergente líquido" },
-      { href: "/productos/jabon-liquido/", label: "Jabón líquido" },
-    ],
-  },
-  {
-    number: "02",
-    word: "Suavidad",
-    text: "Sensación de suavidad y frescura en la ropa, y un planchado más fácil. Para las manos, un jabón que ayuda a suavizar y humectar la piel.",
-    links: [
-      { href: "/productos/suavizante/", label: "Suavizante" },
-      { href: "/productos/jabon-liquido/", label: "Jabón líquido" },
-    ],
-  },
-  {
-    number: "03",
-    word: "Fragancia",
-    text: "Un perfume agradable y duradero en el suavizante y el detergente, y seis aromas para elegir en el jabón líquido.",
-    links: [{ href: "/#aromas", label: "Encuentra tu aroma" }],
-  },
-] as const;
-
 export function ExperienceSection() {
-  return (
-    <section id="experiencia" className="py-section" aria-labelledby="experiencia-title">
-      <div className="frame">
-        <div className="max-w-[46rem]">
-          <h2 id="experiencia-title" className="display reveal-ink text-heading">
-            Más que limpieza.
-          </h2>
-          <p className="mt-6 max-w-[40ch] text-lede text-muted">
-            AROMATIC combina limpieza, suavidad y fragancias agradables para convertir las tareas cotidianas en una
-            experiencia diferente.
-          </p>
-        </div>
+  const ref = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const progress = useTransform(scrollYProgress, [0.05, 0.95], [0, 1]);
 
-        <ol className="mt-band">
-          {CONCEPTS.map((concept) => (
-            <li key={concept.number} className="concept-row reveal">
-              <span className="field-label tabular text-muted">{concept.number}</span>
-              <h3 className="concept-word display">{concept.word}</h3>
-              <div className="concept-copy">
-                <p className="max-w-[44ch] text-body text-muted">{concept.text}</p>
-                <ul className="mt-4 flex flex-wrap gap-x-7 gap-y-1">
-                  {concept.links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="ink-link">
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </li>
-          ))}
-        </ol>
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setActive(Math.max(0, Math.min(CONCEPTS.length - 1, Math.floor(v * CONCEPTS.length))));
+  });
+
+  const concept = CONCEPTS[active];
+  const product = byId(concept.productId);
+
+  return (
+    <section ref={ref} id="experiencia" className="experience-track" aria-labelledby="experiencia-title">
+      <div className="experience-sticky">
+        <div className="frame experience-grid">
+          <div className="experience-head">
+            <h2 id="experiencia-title" className="serif reveal-text text-heading">
+              Más que limpieza.
+            </h2>
+            <p className="reveal mt-5 max-w-[30ch] text-lede text-warm-gray">{site.tagline}</p>
+          </div>
+
+          <ol className="experience-words" aria-label="Conceptos">
+            {CONCEPTS.map((c, i) => (
+              <li key={c.n} className="flex items-baseline gap-4">
+                <span className="tabular text-micro text-warm-gray">{c.n}</span>
+                <span
+                  className="concept-word serif"
+                  data-active={i === active || undefined}
+                  data-past={i < active || undefined}
+                  aria-current={i === active ? "step" : undefined}
+                >
+                  {c.word}
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="experience-media">
+            <SceneStage
+              products={PRODUCTS}
+              focusId={concept.productId}
+              shot={concept.shot}
+              layer="all"
+              className="experience-stage"
+              sizes="(min-width: 1024px) 900px, 760px"
+            />
+            <div className="experience-progress" aria-hidden="true">
+              <motion.span style={{ scaleY: progress }} />
+            </div>
+          </div>
+
+          <div className="experience-text" aria-live="polite">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={concept.n}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8, transition: { duration: 0.2 } }}
+                transition={{ duration: 0.55, ease: EASE_FLOW }}
+              >
+                <p className="max-w-[34ch] text-body text-ink">{concept.text()}</p>
+                <Link href={`/productos/${product.slug}/`} className="text-link mt-4">
+                  {product.name}
+                  <ArrowIcon className="size-4" />
+                </Link>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </section>
   );

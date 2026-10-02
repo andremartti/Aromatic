@@ -1,255 +1,175 @@
 ---
 name: AROMATIC
-description: Sistema "etiqueta impresa" para la web de AROMATIC, productos premium de cuidado del hogar.
+description: Sistema "escena fotográfica" para la web de AROMATIC. La foto real de producto es la protagonista; la interfaz se retira y la cuenta con cámara, foco y tipografía editorial.
 colors:
-  stock: "#fbf8f3"
-  ivory: "#f7f1e8"
-  cream: "#f1e9dd"
-  linen: "#e8dece"
-  champagne: "#dcc8aa"
-  champagne-deep: "#c4aa84"
-  charcoal: "#1f1d1b"
-  ink: "#2b2825"
-  muted: "#5c554d"
-  bronze: "#5f4b33"
-  rule: "#d9ccb8"
-  rule-strong: "#b59d7b"
-  sage: "#4c5d48"
-  sage-soft: "#e0e6da"
-  aroma-floral: "#ead8d4"
-  aroma-chicle: "#ecd7de"
-  aroma-tropical: "#eedbbf"
-  aroma-coco: "#efe7da"
-  aroma-cherry: "#e4c8c6"
-  aroma-fresh: "#d8e3da"
+  ivory: "#f8f3ec"
+  warm-white: "#fcfaf6"
+  cream: "#f1e8dc"
+  beige: "#e4d5c2"
+  champagne: "#cdb592"
+  sand: "#a88d6c"
+  charcoal: "#24201d"
+  ink: "#34302b"
+  warm-gray: "#5f574f"
+  mist: "#8c8279"
+  line: "#ddd0be"
+  gold: "#a9834a"
+  rose: "#e9c3be"
+  sage: "#55654f"
+  aroma-chicle: "#f0c6cc"
+  aroma-floral: "#ddcde6"
+  aroma-tropical: "#f2d3b3"
+  aroma-coco: "#f3ece2"
+  aroma-cherry: "#ebb4b6"
+  aroma-fresh: "#cfe2df"
 typography:
-  masthead:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "calc(min(100vw - 2 * gutter, 90rem) * 0.1372)"
-    fontWeight: 380
-    lineHeight: 0.8
-    letterSpacing: "0.07em"
-    fontVariation: "'wdth' 125"
+  giant:
+    fontFamily: "Bodoni Moda, Didot, Bodoni 72, Georgia, serif"
+    fontSize: "clamp(6rem, min(0.5rem + 10.5vw, 22svh), 13rem)"
+    fontWeight: 400
+    lineHeight: 0.9
+    letterSpacing: "-0.035em"
   display:
-    fontFamily: "Ibarra Real Nova, Iowan Old Style, Georgia, serif"
-    fontSize: "clamp(2.5rem, 1.45rem + 3.9vw, 4.75rem)"
+    fontFamily: "Bodoni Moda, Didot, Bodoni 72, Georgia, serif"
+    fontSize: "clamp(3.25rem, 1.6rem + 7vw, 9rem)"
     fontWeight: 400
-    lineHeight: 1.03
-    letterSpacing: "-0.012em"
-  index:
-    fontFamily: "Ibarra Real Nova, Iowan Old Style, Georgia, serif"
-    fontSize: "clamp(3.25rem, 1.6rem + 7vw, 8.5rem)"
+    lineHeight: 0.92
+  heading:
+    fontFamily: "Bodoni Moda, Didot, Bodoni 72, Georgia, serif"
+    fontSize: "clamp(2.5rem, 1.6rem + 3.6vw, 5rem)"
     fontWeight: 400
-    lineHeight: 0.95
-    letterSpacing: "-0.025em"
-  headline:
-    fontFamily: "Ibarra Real Nova, Iowan Old Style, Georgia, serif"
-    fontSize: "clamp(2.375rem, 1.55rem + 3vw, 4.25rem)"
-    fontWeight: 400
-    lineHeight: 1.04
-    letterSpacing: "-0.012em"
+    lineHeight: 1
   title:
-    fontFamily: "Ibarra Real Nova, Iowan Old Style, Georgia, serif"
-    fontSize: "clamp(1.75rem, 1.35rem + 1.1vw, 2.375rem)"
+    fontFamily: "Bodoni Moda, Didot, Bodoni 72, Georgia, serif"
+    fontSize: "clamp(1.75rem, 1.3rem + 1.5vw, 2.75rem)"
     fontWeight: 400
-    lineHeight: 1.08
+    lineHeight: 1.05
+  lede:
+    fontFamily: "Jost, Futura, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "clamp(1.125rem, 1.05rem + 0.35vw, 1.3125rem)"
+    fontWeight: 400
+    lineHeight: 1.55
   body:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "1rem"
+    fontFamily: "Jost, Futura, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.65
-  lede:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem)"
-    fontWeight: 400
-    lineHeight: 1.6
-  label:
-    fontFamily: "Archivo Variable, ui-sans-serif, system-ui, sans-serif"
-    fontSize: "0.6875rem"
-    fontWeight: 600
-    lineHeight: 1.4
-    letterSpacing: "0.2em"
-    fontVariation: "'wdth' 125"
+  eyebrow:
+    fontFamily: "Jost, Futura, ui-sans-serif, system-ui, sans-serif"
+    fontSize: "0.75rem"
+    fontWeight: 500
+    letterSpacing: "0.28em"
+    textTransform: uppercase
 rounded:
-  ink: "2px"
-  label: "22px"
-  label-inner: "14px"
+  hair: "1px"
+  soft: "3px"
 spacing:
-  gutter: "clamp(1.25rem, 0.6rem + 2.6vw, 4rem)"
-  band: "clamp(2.5rem, 1.8rem + 3vw, 5rem)"
-  section: "clamp(5rem, 3.4rem + 6.4vw, 9.5rem)"
+  gutter: "clamp(1.25rem, 0.5rem + 3vw, 4.5rem)"
+  band: "clamp(2.5rem, 1.6rem + 3.5vw, 5.5rem)"
+  section: "clamp(6rem, 3.5rem + 9vw, 12rem)"
 components:
-  button-ink:
+  button-solid:
     backgroundColor: "{colors.charcoal}"
-    textColor: "{colors.stock}"
-    typography: "{typography.label}"
-    rounded: "{rounded.ink}"
-    padding: "0 28px"
+    textColor: "{colors.ivory}"
+    rounded: "{rounded.hair}"
     height: "52px"
-  button-ink-hover:
-    backgroundColor: "#3a3631"
+  button-line:
+    backgroundColor: "transparent"
+    textColor: "{colors.charcoal}"
+    rounded: "{rounded.hair}"
   button-sage:
     backgroundColor: "{colors.sage}"
-    textColor: "{colors.stock}"
-    typography: "{typography.label}"
-    rounded: "{rounded.ink}"
-    padding: "0 28px"
-    height: "52px"
-  button-sage-hover:
-    backgroundColor: "#3f4f3c"
-  label-panel:
-    backgroundColor: "{colors.ivory}"
-    rounded: "{rounded.label}"
-    padding: "10px"
-  option-chip:
-    textColor: "{colors.ink}"
-    rounded: "{rounded.ink}"
-    padding: "0 18px"
-    height: "46px"
-  option-chip-selected:
-    backgroundColor: "{colors.charcoal}"
-    textColor: "{colors.stock}"
-  aroma-field:
-    backgroundColor: "{colors.champagne}"
+    textColor: "{colors.warm-white}"
+    rounded: "{rounded.hair}"
+  chip:
+    backgroundColor: "transparent"
     textColor: "{colors.charcoal}"
+    rounded: "{rounded.hair}"
 ---
 
 # Design System: AROMATIC
 
 ## Overview
 
-**Creative North Star: "La etiqueta impresa"**
+**North star: la escena fotográfica.** AROMATIC tiene una sola fotografía oficial con los tres productos sobre mármol, frente a una cortina con luz cálida. La web no redibuja etiquetas ni inventa envases: usa esa escena como un set y la recorre con una *cámara* (encuadre, zoom y foco). El producto elegido queda nítido, los demás se desenfocan y una palabra gigante en Bodoni pasa por detrás del envase. La interfaz toma sus colores de la propia foto: marfil de la cortina, crema del mármol, rosa del líquido y dorado de la etiqueta.
 
-La web es el sistema de etiquetas de AROMATIC llevado a escala de página. El papel es la página (blanco cálido); los productos, los aromas y los datos de la marca se componen como etiquetas impresas: papel marfil, esquinas troqueladas, doble filete interior y solo dos tintas. El mástil AROMATIC en Archivo expandido abre y cierra la página como la cabecera de una etiqueta, y las etiquetas dibujadas en los envases repiten exactamente el mismo sistema que la interfaz.
-
-La densidad es baja-media: mucho aire, una sola idea por sección y bandas de color que ocupan regiones completas (el campo champagne de "Encuentra tu aroma", el lino de la pieza editorial) en lugar de acentos dispersos. El tema es claro y fijo: la paleta del brief (ivory, blanco cálido, crema, champagne, carbón, salvia sutil) es la identidad, no una variante.
-
-El movimiento es de imprenta: el texto "se entinta" una sola vez (clip-path), el mástil cede al nav con el scroll y las etiquetas se re-etiquetan al elegir un aroma. Nada flota sin razón ni se repite en bucle.
-
-**Key Characteristics:**
-- Mástil AROMATIC a todo el ancho, impreso por encima de la placa de producto.
-- Etiquetas troqueladas con doble filete como contenedor único de producto y datos.
-- Dos tintas: carbón para todo el texto, salvia solo para selección y WhatsApp.
-- Ibarra Real Nova para la voz editorial; Archivo expandido en versalitas para nombres de campo.
-- Sin precios visibles: el campo de precio existe en datos y solo se imprime si se activa.
+Regla de oro: **producto real > etiqueta real > identidad AROMATIC > composición > animación.**
 
 ## Colors
 
-Papeles cálidos y tintas profundas; el color fuerte se usa por regiones, nunca como salpicadura.
-
-### Primary
-- **Carbón de imprenta** (#1f1d1b): toda la tipografía de titulares, el botón principal, la selección activa en chips y el filete del mástil.
-
-### Secondary
-- **Salvia segunda tinta** (#4c5d48): exclusivamente la acción de comprar por WhatsApp, la marca de selección en la lista de aromas, la selección de texto y el cursor.
-
-### Tertiary
-- **Campo champagne** (#dcc8aa): fondo a sangre de "Encuentra tu aroma". Sobre él, el texto secundario usa **Bronce** (#5f4b33).
-
-### Neutral
-- **Papel de página** (#fbf8f3): fondo general.
-- **Papel de etiqueta** (#f7f1e8): paneles de etiqueta (productos, aroma, nota de pedido, banda de marca).
-- **Crema** (#f1e9dd) y **Lino** (#e8dece): superficies de placa y banda editorial.
-- **Tinta secundaria** (#5c554d): texto secundario sobre papel (6.9:1).
-- **Filete** (#d9ccb8): separadores entre filas; **Filete de etiqueta** (#b59d7b): doble filete interior de los paneles.
-- **Tintes de aroma** (floral #ead8d4, chicle #ecd7de, frutas tropicales #eedbbf, coco #efe7da, cherry #e4c8c6, fresh #d8e3da): decorativos; tiñen la banda de la etiqueta de aroma y el líquido de las ilustraciones. No describen la composición del producto.
+- **Neutrales (página):** ivory `#f8f3ec` es el fondo; warm-white y cream marcan bandas; beige y line se usan para filetes y bordes.
+- **Texto:** charcoal `#24201d` para titulares; ink `#34302b` para el cuerpo; warm-gray `#5f574f` para el texto secundario (AA sobre ivory y cream); mist solo para texto grande o decorativo.
+- **Acentos:** gold `#a9834a`, tomado del dorado de la etiqueta, solo en filetes de 1 px y detalles. Sage `#55654f` es el único acento de acción y se reserva para WhatsApp y "Solicitar información".
+- **Atmósferas de aroma:** seis tintes pastel que tiñen luz y partículas en la sección de aromas. Son decorativos y no describen la composición del producto.
 
 ### Named Rules
-**The Two Inks Rule.** El texto se imprime en carbón (o tinta secundaria). La salvia se reserva para WhatsApp y la selección; si aparece en cualquier otro lugar, sobra.
-
-**The Region Rule.** El champagne y el lino ocupan secciones completas a sangre; nunca se usan como acento en botones, insignias o bordes.
+- **Dos tintas de acción:** charcoal para navegar ("Conocer producto") y sage para contactar. No hay un tercer color de botón.
+- **El color del líquido lo pone la foto.** La UI nunca pinta el producto. Las variantes de aroma del jabón son recoloreados del líquido de la foto original, con la etiqueta intacta.
 
 ## Typography
 
-**Display Font:** Ibarra Real Nova (con Iowan Old Style, Georgia)
-**Body Font:** Archivo Variable (con ui-sans-serif, system-ui)
-**Label Font:** Archivo Variable en ancho expandido (wdth 125)
-
-**Character:** Ibarra, revival de los tipos del impresor español Joaquín Ibarra, aporta la voz editorial en castellano; Archivo expandido en versalitas suena a dato impreso en etiqueta. Ambas autoalojadas con next/font.
+Bodoni Moda (eje opsz) para la voz editorial: palabra gigante del hero, titulares y nombres de producto. Jost para cuerpo, etiquetas de campo y botones. Las fuentes se autoalojan con `next/font/local`.
 
 ### Hierarchy
-- **Masthead** (380, 13.72% del ancho del contenedor, 0.8, tracking 0.07em, expandido): solo el wordmark AROMATIC del hero y del pie.
-- **Display** (400, clamp 2.5-4.75rem, 1.03): titular del hero, en dos líneas en escritorio.
-- **Index** (400, clamp 3.25-8.5rem, 0.95): palabras del índice "Más que limpieza".
-- **Headline** (400, clamp 2.375-4.25rem, 1.04): títulos de sección.
-- **Title** (400, clamp 1.75-2.375rem, 1.08): nombres de producto en etiquetas.
-- **Lede** (400, clamp 1.0625-1.1875rem, 1.6): entradillas, máximo 34-46ch.
-- **Body** (400, 1rem, 1.65): descripciones, máximo 44ch en etiquetas.
-- **Label** (600, 11px, tracking 0.2em, versalitas expandidas): nombres de campo (Aroma, Presentación), navegación y botones.
-
-### Named Rules
-**The Field Name Rule.** Las versalitas expandidas nombran campos de datos (Aroma, Presentación, Disponible en) y la marca en una etiqueta; nunca se usan como antetítulo decorativo de una sección.
-
-**The No Italics Rule.** Ibarra se usa en redonda; la jerarquía viene de tamaño y espacio, no de itálicas.
+- **Giant:** nombre del producto activo detrás del envase en el hero, limitado por alto de viewport (22svh) para no invadir la ficha.
+- **Heading:** títulos de sección ("Más que limpieza.", "Encuentra tu aroma.", "Tu hogar también merece sentirse especial.").
+- **Title:** nombres de aroma y títulos de ficha.
+- **Eyebrow:** Jost 500 en versalitas con 0.28em de tracking, para uso y categoría ("PARA LA LAVADORA").
 
 ## Layout
 
-Contenedor `.frame` de 1440px de contenido con medianil fluido (gutter) y zonas seguras. Rejilla de 12 columnas desde 1024px; por debajo, una columna estricta (`minmax(0, 1fr)` para que el texto ampliado no desborde). Breakpoints: móvil < 640, tablet 768, laptop 1024, desktop 1280, wide 1600.
-
-Ritmo: `section` entre secciones, `band` entre bloques de una sección, más espacio sobre un titular que bajo él. Composiciones de sección distintas a propósito: mástil + placa (hero), índice tipográfico (experiencia), vitrina asimétrica 7/5 (productos), campo con etiqueta fija (aromas), manifiesto + banda de campos (marca), pieza editorial a sangre (editorial), nota de pedido centrada (contacto).
+Mobile-first con `.frame` (máximo 90rem más gutter fluido). Desde 64rem el hero es una escena centrada al 46% del ancho, con selector a la izquierda y ficha a la derecha. Al bajar, la escena se fija (sticky) y se desplaza a la derecha mientras pasan los capítulos de cada producto (`--u` ligado al scroll). En móvil, la escena va arriba y la ficha debajo, con un alto calculado para que el CTA quepa en la primera pantalla incluso a 375×667. Además, se puede deslizar (swipe) para cambiar de producto.
 
 ## Elevation & Depth
 
-Profundidad de papel sobre papel: sombras cálidas con desplazamiento y desenfoque suave, nunca halos ni sombras duras.
+La profundidad viene de la foto, no de sombras:
+1. Escena desenfocada (capa base).
+2. Palabra gigante.
+3. Producto nítido recortado con máscara alfa, por delante de la palabra.
 
 ### Shadow Vocabulary
-- **Papel** (`box-shadow: 0 1px 0 rgb(31 29 27 / 0.04), 0 18px 34px -24px rgb(84 62 36 / 0.34)`): todo panel de etiqueta en reposo.
-- **Papel levantado** (`box-shadow: 0 1px 0 rgb(31 29 27 / 0.05), 0 30px 50px -28px rgb(84 62 36 / 0.42)`): etiqueta de producto en hover (con translateY -4px).
-- **Flotante** (`box-shadow: 0 10px 30px -10px rgb(31 29 27 / 0.35)`): solo el botón flotante de WhatsApp.
-
-### Named Rules
-**The Paper Rule.** Si una sombra no parece papel apoyado sobre papel, no pertenece al sistema.
+- `veil`: superficies elevadas sutiles.
+- `float`: botón flotante de WhatsApp.
 
 ## Shapes
 
-Dos radios con significado: tinta (2px) para todo lo que se pulsa (botones, chips, flotante) y troquel (22px, filete interior a 14px) para las etiquetas. El doble filete interior de los paneles es un borde de 1px más un contorno de 1px a 2px de distancia, en tinta de filete al 55%. Los filetes horizontales solo separan filas de datos reales.
+Casi recto: radio de 1 px en botones, chips y campos. El único elemento redondeado es el botón flotante de WhatsApp.
 
 ## Components
 
+### Escena (`SceneStage`)
+Recibe la foto, un encuadre `{cx, cy, z}` en píxeles de la foto original de 720×1440 y el producto en foco. Muestra la capa desenfocada más una máscara nítida por producto; la cámara transiciona con un FLIP de Motion (0.85 s, AROMATIC FLOW). Los laterales del hero son botones reales ("Ver AROMATIC …") con escala de hover ≤ 1.04.
+
 ### Buttons
-- **Shape:** sello de tinta (2px), 52px de alto.
-- **Primary (tinta):** carbón con texto papel, versalitas expandidas 13px, tracking 0.12em; flecha que avanza 4px en hover.
-- **WhatsApp (salvia):** salvia con texto papel e icono de WhatsApp; única acción de compra, siempre "Comprar por WhatsApp".
-- **Hover / Focus / Active:** hover solo con puntero fino; foco con contorno carbón de 2px a 3px; presión `scale(0.97)` en 140ms.
-- **Enlace de tinta:** versalitas con filete inferior que se recoge al 35% en hover.
+`btn-solid` (charcoal, primario de navegación), `btn-line` (contorno, secundario) y `btn-sage` (WhatsApp). Alto de 52 px; al presionar, `scale(.97)` en 140 ms.
 
 ### Chips
-- **Style:** opciones de aroma y presentación en el detalle; contorno de filete de etiqueta, 46px de alto.
-- **State:** seleccionado en carbón relleno con texto papel; radios nativos ocultos con foco visible en el chip.
-
-### Cards / Containers
-- **Corner Style:** troquel (22px).
-- **Background:** papel de etiqueta con placa interior tintada por el producto o el aroma.
-- **Shadow Strategy:** Papel en reposo, Papel levantado en hover.
-- **Border:** doble filete interior.
-- **Internal Padding:** 10px al borde de la placa; cuerpo fluido de 1-2rem.
-
-### Inputs / Fields
-- **Style:** selects nativos sin caja: filete inferior carbón, valor en Ibarra 1.375rem, flecha dibujada en CSS.
-- **Focus:** contorno carbón de 2px.
-- **Disabled:** cuando solo hay una opción, sin flecha y con filete de etiqueta.
+Radios nativos ocultos con etiqueta visible; el chip seleccionado se rellena de charcoal con texto ivory.
 
 ### Navigation
-- Una línea, 64px, papel translúcido. Links en versalitas expandidas con filete que se dibuja en hover. En el inicio, el wordmark aparece al dejar atrás el mástil (animación ligada al scroll). En móvil, botón "Menú" y hoja a pantalla completa con links en Ibarra y CTA de WhatsApp.
+Barra fija que se comprime al pasar los 24 px de scroll: se reduce levemente (scale .96) y gana un fondo marfil translúcido con desenfoque y una sombra muy suave. En móvil abre una hoja de menú a pantalla completa con trampa de foco.
 
-### Etiqueta de aroma (signature)
-Panel troquelado fijo junto a la lista de aromas: banda superior con el tinte del aroma, nombre del aroma a gran escala que se re-entinta con desenfoque de 4px al cambiar, envases ilustrados re-etiquetados con el aroma, lista de productos que lo llevan y CTA de WhatsApp con el pedido reescrito.
+### Atmósfera de aroma
+Al cambiar de aroma, la nueva atmósfera se expande con `clip-path: circle()` desde la opción elegida, durante 1.1 s. Encima flotan 8 partículas desenfocadas en posiciones fijas. No hay frutas, flores ni burbujas literales.
 
-### Placa de producto
-Superficie tintada con luz de estudio y "mesa" inferior donde se apoya el envase. Muestra la fotografía si `image` existe (fundida con multiply sobre la placa) o la ilustración del envase; si la foto falla, vuelve a la ilustración.
+## Motion
+
+- `ease-flow` `cubic-bezier(.22,1,.36,1)`: cambios de producto, cámara y revelados.
+- Entrada del hero en 12 pasos, solo con CSS (`in-fade`, `in-rise`, `in-reveal`, `in-draw`, `in-settle`, `in-focus` con `--d`).
+- Revelados de sección con IntersectionObserver (`.reveal`, `.reveal-text`, `.reveal-side`, `.reveal-line`), activos solo con `html[data-js]`.
+- Transición de página de 300 a 450 ms (`page-enter`, fill backwards).
+- Inclinación de 2 a 3° siguiendo el ratón en la ficha de producto.
+- `prefers-reduced-motion`: sin desplazamientos, zoom ni inclinación; solo cambios de opacidad.
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** componer todo producto o dato de marca como etiqueta: papel marfil, troquel de 22px y doble filete.
-- **Do** usar "Comprar por WhatsApp" como única etiqueta de compra, en salvia.
-- **Do** dejar que los colores de región ocupen secciones completas a sangre.
-- **Do** mantener visibles los contenidos sin JavaScript y con movimiento reducido; animar solo `transform`, `opacity` y `clip-path`.
-- **Do** usar iconos de Phosphor (trazo light/regular).
+- Usar la fotografía oficial y sus recortes; encuadrar, enfocar y desenfocar.
+- Recolorear solo el líquido del jabón para cada aroma, sin tocar reflejos, transparencia ni etiqueta.
+- Mostrar "Conocer producto", "Solicitar información" y "Consultar producto" como CTAs.
 
 ### Don't:
-- **Don't** mostrar precios, "Consultar precio" ni rangos de precio mientras `features.prices` esté desactivado.
-- **Don't** poner antetítulos en versalitas sobre los títulos de sección.
-- **Don't** usar la salvia fuera de WhatsApp y la selección, ni degradados de color en texto.
-- **Don't** usar radios de píldora o tarjetas iguales de icono + título + texto.
-- **Don't** simular fotografías oficiales: sin foto real, la ilustración del envase.
+- No mostrar precios en ningún lugar (cards, ficha, metadata ni JSON-LD).
+- No redibujar etiquetas, logos ni envases.
+- No inventar certificaciones, estadísticas, testimonios, redes, teléfonos ni direcciones.
+- No usar ilustraciones literales de aromas (frutas, flores, burbujas).

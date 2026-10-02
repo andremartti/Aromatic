@@ -45,11 +45,11 @@ function describeLine(line: CartLine): string {
 }
 
 export const whatsappCommerce: CommerceProvider = {
-  ctaLabel: "Comprar por WhatsApp",
+  ctaLabel: "Solicitar información",
   availability: availabilityFromStock,
   checkoutUrl(lines) {
     const detail = lines.map((l) => `- ${describeLine(l)}`).join("\n");
-    return whatsappLink(`Hola ${site.name}, quiero comprar:\n${detail}\n\n¿Me confirman disponibilidad?`);
+    return whatsappLink(`Hola ${site.name}, me gustaría recibir información sobre:\n${detail}`);
   },
 };
 

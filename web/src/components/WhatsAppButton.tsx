@@ -38,7 +38,7 @@ export function WhatsAppButton() {
         aria-hidden={muted || undefined}
       >
         <WhatsAppIcon className="size-6 shrink-0" />
-        <span className="max-lg:sr-only">Comprar por WhatsApp</span>
+        <span className="max-md:sr-only">Solicitar información</span>
       </a>
     </div>
   );

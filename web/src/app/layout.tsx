@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { archivo, ibarra } from "./fonts";
+import { bodoni, jost } from "./fonts";
 import { SITE_URL, site } from "@/config/site";
 import { Providers } from "@/components/Providers";
 import { RevealObserver } from "@/components/RevealObserver";
@@ -20,15 +20,15 @@ export const metadata: Metadata = {
     locale: "es_HN",
     type: "website",
     url: "./",
-    images: [{ url: "og.png", width: 1200, height: 630, alt: `${site.name}: ${site.tagline}` }],
+    images: [{ url: "og.jpg", width: 1200, height: 630, alt: `${site.name}: ${site.tagline}` }],
   },
-  twitter: { card: "summary_large_image", title, description: site.description, images: ["og.png"] },
+  twitter: { card: "summary_large_image", title, description: site.description, images: ["og.jpg"] },
   icons: { icon: [{ url: "favicon.svg", type: "image/svg+xml" }] },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#fbf8f3",
+  themeColor: "#f8f3ec",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -37,13 +37,13 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${ibarra.variable} ${archivo.variable}`} suppressHydrationWarning>
+    <html lang="es" className={`${bodoni.variable} ${jost.variable}`} suppressHydrationWarning>
       <body className="min-h-dvh">
         {/* Marca que hay JavaScript antes de pintar: habilita los revelados sin ocultar contenido si JS falla. */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.setAttribute('data-js','')" }} />
         <a
           href="#contenido"
-          className="btn btn-ink fixed left-4 top-4 z-(--z-skip) -translate-y-24 focus:translate-y-0"
+          className="btn btn-solid fixed left-4 top-4 z-(--z-skip) -translate-y-24 focus:translate-y-0"
         >
           Saltar al contenido
         </a>

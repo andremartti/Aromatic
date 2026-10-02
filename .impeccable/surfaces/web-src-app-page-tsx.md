@@ -1,5 +1,5 @@
 ---
-version: 1
+version: 2
 slug: "web-src-app-page-tsx"
 primary_target: "web/src/app/page.tsx"
 related_targets: ["web/src/app/productos/[slug]/page.tsx"]
@@ -7,20 +7,20 @@ related_targets: ["web/src/app/productos/[slug]/page.tsx"]
 
 # Home AROMATIC (/)
 
-Mode: Persuade. Visitor: hogar en Tegucigalpa, casi siempre en móvil, que elige producto + aroma + presentación y pide por WhatsApp. Action: abrir WhatsApp con el pedido escrito (desde detalle de producto y desde "Encuentra tu aroma"). Proof: solo hechos del catálogo y del brief. Constraints: sin precios visibles, solo 3 productos, sin fotos aptas (ilustraciones reemplazables por `image`), tema claro fijado por la paleta del brief.
+Mode: Persuade (catálogo informativo, no ecommerce). Visitor: hogar en Tegucigalpa, casi siempre en móvil, que quiere conocer los tres productos y sus aromas y pedir información por WhatsApp. Action: "Conocer producto" (ficha) y "Solicitar información" / "Consultar producto" (WhatsApp con mensaje redactado). Proof: solo hechos del catálogo y del brief. Constraints: sin precios en ningún lugar; solo 3 productos; la fotografía oficial es intocable salvo el color del líquido; tema claro de la paleta del brief.
 
-Memorable moment: el selector de aromas re-etiqueta una etiqueta grande en vivo.
+Memorable moment: el "product universe": la cámara se mueve por la foto real, el producto elegido queda nítido y su nombre gigante en Bodoni pasa por detrás del envase.
 
 ## Direction contract
 
-THESIS: La web es el sistema de etiquetas de AROMATIC a escala arquitectónica: mástil de marca, etiquetas de producto y campos de aroma compuestos como una etiqueta impresa fina (papel, dos tintas, filetes que sostienen campos reales: aroma, presentación). Rechaza el envase flotando entre burbujas, la fila de tres tarjetas de beneficios y la grilla de ecommerce con precio.
+THESIS: La fotografía oficial es el set y la web es la cámara. Encuadre, foco y desenfoque cuentan la historia; la interfaz se retira y toma sus colores de la escena. Rechaza las etiquetas redibujadas, los envases flotando entre burbujas, la fila de tres tarjetas de beneficios y la grilla de ecommerce con precio.
 
-OWN-WORLD: Papel blanco cálido como página; paneles de etiqueta en papel marfil/crema con doble filete interior en tinta champagne y esquinas troqueladas de 22px; campos champagne que ocupan regiones completas (aromas); tinta carbón para el texto; salvia como segunda tinta solo para selección y la acción de WhatsApp. Ibarra Real Nova (herencia tipográfica española de imprenta) para titulares y nombres de producto, sin itálicas decorativas; Archivo expandido en versalitas para el mástil y los nombres de campo, Archivo normal para texto. Controles de 2px como sello de tinta; sombras papel sobre papel, cálidas y con desplazamiento.
+OWN-WORLD: Marfil, crema y champagne de la cortina y el mármol; dorado de la etiqueta solo en filetes de 1px; salvia solo para WhatsApp. Bodoni Moda (opsz) para la voz editorial y la palabra gigante; Jost para texto y controles. Controles casi rectos (1px). Profundidad por capas fotográficas (fondo desenfocado → palabra → producto nítido por máscara alfa), no por sombras.
 
-STORY: El visitante entiende que AROMATIC son tres productos para el hogar con aroma a elegir; cree que es una marca cuidada y honesta (nada inventado); elige producto, aroma y presentación y abre WhatsApp con el pedido redactado.
+STORY: Limpieza → Suavidad → Fragancia (AROMATIC FLOW). El visitante entiende que AROMATIC son tres productos para el hogar, ve el producto real con su etiqueta real, explora los seis aromas del jabón líquido y pide información por WhatsApp.
 
-FIRST VIEWPORT: 1440x900. Nav de una línea: links a la derecha, wordmark pequeño oculto hasta que el mástil sale. Mástil AROMATIC en Archivo expandido ocupando el ancho completo del contenedor, doble filete debajo. Debajo, 7 columnas: titular de dos líneas en Ibarra (~4.5rem), subtítulo (<=20 palabras), CTA primario "Descubrir productos" (carbón, 2px) + enlace "Conocer AROMATIC". 5 columnas: panel de etiqueta troquelado con los tres envases agrupados sobre su filete inferior, cruzando el doble filete del mástil. Móvil: mástil a todo ancho, panel de producto, titular, CTAs apilados a ancho completo. Interacción firma: "re-etiquetar" en Encuentra tu aroma (nombre del aroma se re-entinta con desenfoque de 2-4px, productos que lo llevan pasan al frente, tinte del campo cambia, el CTA de WhatsApp se reescribe). Gramática de motion: entintado de carga una sola vez (clip-path), mástil que se acopla al nav con el scroll, presión 0.97, salidas más rápidas que entradas, nada en bucle.
+FIRST VIEWPORT: 1440x900. Nav de una línea (wordmark Bodoni con tracking, cuatro enlaces). Escena centrada al 46% del ancho con bordes desvanecidos; detergente en foco y laterales desenfocados que son botones. Palabra gigante del producto a 31% del alto, detrás del envase. Selector 01/02/03 a la izquierda; ficha (eyebrow, título, filete, resumen, "Conocer producto" + "Solicitar información") abajo a la derecha; indicador "Descubrir" abajo a la izquierda. Móvil: escena arriba con alto calculado para que el CTA quepa en la primera pantalla, selector en fila, ficha debajo, swipe para cambiar de producto. Entrada en 12 pasos solo con CSS. Gramática de motion: cubic-bezier(.22,1,.36,1), cambios de 400 a 700 ms, cámara de 850 a 900 ms, presión .97, nada en bucle salvo las partículas lentas de la atmósfera; prefers-reduced-motion deja solo cambios de opacidad.
 
-FORM: Etiqueta impresa, posición 6 de 7 en mi lista ordenada (1 casa de fragancia, 2 ropa recién doblada, 3 luz de ventana, 4 tira olfativa, 5 revista de interiorismo, 6 etiqueta impresa, 7 espuma). Seed key c80ccb85 (roll degradado: sin challengers, servicio de roll bloqueado por la red).
+FORM: Escena fotográfica con cámara. Reemplaza la v1 "etiqueta impresa", que el cliente descartó por verse generada por IA.
 
-FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+FINISH: build verificado en 1440/1280/1024/768/430/390/375, axe sin violaciones en las páginas de producto, DESIGN.md y sidecar actualizados, procedencia de los rasters en web/design-assets/README.md.

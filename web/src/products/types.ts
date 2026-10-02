@@ -1,51 +1,38 @@
 /**
  * Modelo de datos del catálogo AROMATIC.
- *
- * Está pensado para crecer: cada producto tiene presentaciones (variantes) con
- * su propio precio, SKU e inventario, de modo que el mismo modelo sirva más
- * adelante para un carrito, un checkout o una conexión con inventario.
+ * Cada producto tiene presentaciones (variantes) con su propio precio, SKU e
+ * inventario, para servir más adelante a un carrito o una conexión con inventario.
  */
+import type { Box, Shot } from "@/config/scene";
 
 export type CategoryId = "suavizante" | "detergente" | "jabon-manos";
 
 export interface Category {
   id: CategoryId;
-  /** Nombre visible de la categoría. */
   name: string;
 }
 
 export interface Fragrance {
   id: string;
-  /** Nombre del aroma tal como aparece en el catálogo. */
+  /** Nombre del aroma tal como lo indica la marca. */
   name: string;
-  /**
-   * Tinte puramente decorativo (variable CSS del design system) para
-   * representar el aroma en la interfaz. No describe la composición.
-   */
+  /** Tinte decorativo de la atmósfera (variable CSS). No describe la composición. */
   tint: string;
 }
 
 export interface Presentation {
   id: string;
-  /** Etiqueta visible: "Galón", "500 mL"… */
   label: string;
   /** SKU interno (coincide con el sistema financiero AROMATIC). */
   sku: string;
   /**
-   * Precio de venta en la moneda de `site.currency`.
-   * `null` = precio no definido. Aunque tenga valor, solo se muestra si
-   * `features.prices` está activo en src/config/site.ts.
+   * Precio en la moneda de `site.currency`. `null` = no definido. Aunque tenga
+   * valor, solo se muestra si `features.prices` está activo (src/config/site.ts).
    */
   price: number | null;
-  /**
-   * Existencias disponibles. `null` = no se controla inventario todavía
-   * (la disponibilidad se confirma por WhatsApp).
-   */
+  /** Existencias. `null` = no se controla inventario todavía. */
   stock: number | null;
 }
-
-/** Tipo de envase: define qué ilustración se usa mientras no haya fotografía. */
-export type ContainerShape = "jug" | "pump";
 
 export interface Product {
   id: string;
@@ -53,30 +40,26 @@ export interface Product {
   category: CategoryId;
   /** Nombre completo, siempre con la marca: "AROMATIC Suavizante". */
   name: string;
-  /** Nombre del producto sin la marca, para etiquetas y navegación. */
+  /** Nombre sin la marca. */
   shortName: string;
-  /** Frase corta para tarjetas (derivada de la descripción del catálogo). */
-  shortDescription: string;
-  /** Descripción completa, tal como aparece en el catálogo. */
+  /** Palabra grande del universo de producto. */
+  heroWord: string;
+  /** Rótulo corto del uso (dato, no adorno). */
+  use: string;
+  /** Descripción oficial breve. */
+  summary: string;
+  /** Descripción completa (catálogo). */
   description: string;
   fragrances: Fragrance[];
   presentations: Presentation[];
+  /** Encuadre de cámara y zona del producto en la escena fotográfica. */
+  scene: { shot: Shot; box: Box; mask: string };
   /**
-   * Ruta de la fotografía del producto dentro de /public (por ejemplo
-   * "/images/products/suavizante.jpg"). Mientras sea `null` se muestra la
-   * ilustración de envase definida por `visual`.
+   * Fotografía recortada del producto por aroma (id de aroma → ruta en /public).
+   * Solo cambia el color del líquido; la etiqueta es la original.
+   * Si un aroma no tiene foto, se usa la escena.
    */
-  image: string | null;
-  /** Texto alternativo de la fotografía cuando exista. */
-  imageAlt?: string;
-  /** Producto destacado: ocupa la etiqueta grande en la vitrina. */
+  cutouts?: Record<string, string>;
+  /** Producto destacado en el primer encuadre. */
   featured?: boolean;
-  /** Dirección de arte para la ilustración provisional. */
-  visual: {
-    shape: ContainerShape;
-    /** Envase por presentación cuando cambia (id de presentación → forma). */
-    shapeByPresentation?: Record<string, ContainerShape>;
-    /** Color del líquido en la ilustración (decorativo). */
-    tint: string;
-  };
 }

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { List } from "@phosphor-icons/react/dist/ssr/List";
 import { X } from "@phosphor-icons/react/dist/ssr/X";
 import { NAV_LINKS } from "@/config/navigation";
@@ -10,22 +10,26 @@ import { site } from "@/config/site";
 import { GENERAL_MESSAGE, whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "./icons";
 
+const EASE_FLOW = [0.22, 1, 0.36, 1] as const;
+
 interface NavbarProps {
-  /**
-   * "home": transparente sobre el mástil y con el wordmark oculto hasta que
-   * el mástil sale de pantalla (animación ligada al scroll, solo CSS).
-   * "page": papel sólido desde el inicio.
-   */
-  variant?: "home" | "page";
+  /** Coreografía de entrada (solo en la portada). */
+  intro?: boolean;
 }
 
-const EASE_DRAWER = [0.32, 0.72, 0, 1] as const;
-
-export function Navbar({ variant = "page" }: NavbarProps) {
+/**
+ * Navegación. Al hacer scroll se comprime levemente, toma un fondo marfil
+ * translúcido y una sombra muy sutil; arriba recupera su estado inicial.
+ */
+export function Navbar({ intro = false }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const reduce = useReducedMotion();
+  const { scrollY } = useScroll();
   const sheetRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+
+  useMotionValueEvent(scrollY, "change", (y) => setScrolled(y > 24));
 
   const close = useCallback(() => {
     setOpen(false);
@@ -37,16 +41,12 @@ export function Navbar({ variant = "page" }: NavbarProps) {
     const { overflow } = document.body.style;
     document.body.style.overflow = "hidden";
     sheetRef.current?.querySelector<HTMLElement>("a, button")?.focus();
-
     function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        close();
-        return;
-      }
+      if (event.key === "Escape") return close();
       if (event.key !== "Tab" || !sheetRef.current) return;
-      const focusables = sheetRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
+      const items = sheetRef.current.querySelectorAll<HTMLElement>("a[href], button:not([disabled])");
+      const first = items[0];
+      const last = items[items.length - 1];
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
@@ -62,19 +62,25 @@ export function Navbar({ variant = "page" }: NavbarProps) {
     };
   }, [open, close]);
 
+  const d = (ms: number) => (intro ? ({ "--d": `${ms}ms` } as React.CSSProperties) : undefined);
+
   return (
     <>
-      <header className="site-nav fixed inset-x-0 top-0 z-(--z-nav)" data-variant={variant}>
-        <div className="frame flex h-(--nav-h) items-center justify-between gap-6">
-          <Link href="/" className="nav-wordmark wordmark inline-flex min-h-11 items-center text-[15px] text-charcoal" aria-label={`${site.name}, inicio`}>
+      <header className="site-nav fixed inset-x-0 top-0 z-(--z-nav)" data-scrolled={scrolled || undefined}>
+        <div className="site-nav-inner frame flex h-(--nav-h) items-center justify-between gap-8">
+          <Link
+            href="/"
+            className={`wordmark inline-flex min-h-11 items-center text-[1.0625rem] ${intro ? "in-rise" : ""}`}
+            style={d(250)}
+          >
             {site.name}
           </Link>
 
-          <nav aria-label="Principal" className="hidden lg:block">
-            <ul className="flex flex-wrap items-center justify-end gap-x-9">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="nav-link field-label py-3 text-ink">
+          <nav aria-label="Principal" className="hidden md:block">
+            <ul className="flex items-center gap-9">
+              {NAV_LINKS.map((link, i) => (
+                <li key={link.href} className={intro ? "in-rise" : ""} style={d(340 + i * 60)}>
+                  <Link href={link.href} className="nav-link inline-flex min-h-11 items-center">
                     {link.label}
                   </Link>
                 </li>
@@ -85,7 +91,8 @@ export function Navbar({ variant = "page" }: NavbarProps) {
           <button
             ref={toggleRef}
             type="button"
-            className="field-label -mr-3 inline-flex min-h-11 items-center gap-2 px-3 text-charcoal lg:hidden"
+            className={`-mr-3 inline-flex min-h-11 items-center gap-2 px-3 text-[0.875rem] font-medium md:hidden ${intro ? "in-rise" : ""}`}
+            style={d(340)}
             aria-expanded={open}
             aria-controls="menu-movil"
             onClick={() => setOpen(true)}
@@ -94,6 +101,7 @@ export function Navbar({ variant = "page" }: NavbarProps) {
             <List size={20} weight="light" aria-hidden="true" />
           </button>
         </div>
+        <span className={`site-nav-rule ${intro ? "in-draw" : ""}`} style={d(100)} aria-hidden="true" />
       </header>
 
       <AnimatePresence>
@@ -104,35 +112,29 @@ export function Navbar({ variant = "page" }: NavbarProps) {
             role="dialog"
             aria-modal="true"
             aria-label="Menú"
-            className="fixed inset-0 z-(--z-sheet) flex flex-col bg-stock pb-[max(1.5rem,env(safe-area-inset-bottom))] lg:hidden"
-            initial={reduce ? { opacity: 0 } : { transform: "translateY(-100%)" }}
-            animate={reduce ? { opacity: 1 } : { transform: "translateY(0%)" }}
-            exit={reduce ? { opacity: 0 } : { transform: "translateY(-100%)", transition: { duration: 0.28, ease: EASE_DRAWER } }}
-            transition={{ duration: reduce ? 0.15 : 0.42, ease: EASE_DRAWER }}
+            className="fixed inset-0 z-(--z-sheet) flex flex-col bg-ivory pb-[max(1.5rem,env(safe-area-inset-bottom))] md:hidden"
+            initial={reduce ? { opacity: 0 } : { opacity: 0, transform: "translateY(-2%)" }}
+            animate={{ opacity: 1, transform: "translateY(0%)" }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+            transition={{ duration: 0.4, ease: EASE_FLOW }}
           >
             <div className="frame flex h-(--nav-h) items-center justify-between">
-              <span className="wordmark text-[15px] text-charcoal">{site.name}</span>
-              <button
-                type="button"
-                className="field-label -mr-3 inline-flex min-h-11 items-center gap-2 px-3 text-charcoal"
-                onClick={close}
-              >
+              <span className="wordmark text-[1.0625rem]">{site.name}</span>
+              <button type="button" className="-mr-3 inline-flex min-h-11 items-center gap-2 px-3 text-[0.875rem] font-medium" onClick={close}>
                 Cerrar
                 <X size={20} weight="light" aria-hidden="true" />
               </button>
             </div>
-            <div className="frame double-rule text-rule-strong" aria-hidden="true" />
-            <nav aria-label="Menú móvil" className="frame flex-1 pt-6">
+            <nav aria-label="Menú móvil" className="frame flex-1 pt-8">
               <ul>
                 {NAV_LINKS.map((link, i) => (
                   <motion.li
                     key={link.href}
-                    className="border-b border-rule"
-                    initial={reduce ? false : { opacity: 0, transform: "translateY(10px)" }}
+                    initial={reduce ? false : { opacity: 0, transform: "translateY(12px)" }}
                     animate={{ opacity: 1, transform: "translateY(0px)" }}
-                    transition={{ duration: 0.4, delay: reduce ? 0 : 0.12 + i * 0.045, ease: [0.23, 1, 0.32, 1] }}
+                    transition={{ duration: 0.5, delay: 0.08 + i * 0.05, ease: EASE_FLOW }}
                   >
-                    <Link href={link.href} onClick={() => setOpen(false)} className="display block py-4 text-[2.25rem] leading-tight">
+                    <Link href={link.href} onClick={() => setOpen(false)} className="serif block py-3 text-[2.5rem] leading-tight">
                       {link.label}
                     </Link>
                   </motion.li>
@@ -140,14 +142,9 @@ export function Navbar({ variant = "page" }: NavbarProps) {
               </ul>
             </nav>
             <div className="frame">
-              <a
-                href={whatsappLink(GENERAL_MESSAGE)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-sage w-full"
-              >
+              <a href={whatsappLink(GENERAL_MESSAGE)} target="_blank" rel="noopener noreferrer" className="btn btn-sage w-full">
                 <WhatsAppIcon className="size-5" />
-                Comprar por WhatsApp
+                Solicitar información
               </a>
             </div>
           </motion.div>

@@ -4,13 +4,12 @@ import { useId, useState } from "react";
 import { PRODUCTS } from "@/products/products";
 import { commerce } from "@/lib/commerce";
 import { site } from "@/config/site";
-import { WhatsAppIcon } from "./icons";
 import { CtaZone } from "./CtaZone";
+import { WhatsAppIcon } from "./icons";
 
 /**
- * "Pide por WhatsApp": nota de pedido con forma de etiqueta.
- * Producto, aroma y presentación se eligen con selects nativos (cómodos en
- * móvil y accesibles) y el mensaje de WhatsApp se escribe solo.
+ * Solicitud de información: producto, aroma y presentación con selects
+ * nativos (cómodos en móvil, accesibles) y el mensaje de WhatsApp listo.
  */
 export function OrderSlip() {
   const uid = useId();
@@ -28,31 +27,29 @@ export function OrderSlip() {
     const next = PRODUCTS.find((p) => p.id === id);
     if (!next) return;
     setProductId(id);
-    setFragranceId((current) => (next.fragrances.some((f) => f.id === current) ? current : next.fragrances[0].id));
-    setPresentationId((current) =>
-      next.presentations.some((p) => p.id === current) ? current : next.presentations[0].id,
-    );
+    setFragranceId((c) => (next.fragrances.some((f) => f.id === c) ? c : next.fragrances[0].id));
+    setPresentationId((c) => (next.presentations.some((p) => p.id === c) ? c : next.presentations[0].id));
   }
 
   return (
-    <section id="contacto" className="py-section" aria-labelledby="contacto-title">
-      <div className="frame">
-        <div className="mx-auto max-w-[40rem] text-center">
-          <h2 id="contacto-title" className="display reveal-ink text-heading">
-            Pide por WhatsApp.
+    <section id="contacto" className="contact bg-cream" aria-labelledby="contacto-title">
+      <div className="frame contact-grid">
+        <div>
+          <h2 id="contacto-title" className="serif reveal-text text-heading">
+            Solicitar información.
           </h2>
-          <p className="mx-auto mt-5 max-w-[38ch] text-lede text-muted">
-            Vendemos en {site.city}. Elige el producto, el aroma y la presentación: el mensaje se escribe solo.
+          <p className="reveal mt-6 max-w-[34ch] text-lede text-warm-gray">
+            Elige producto, aroma y presentación, y escríbenos por WhatsApp. Vendemos en {site.city}.
           </p>
         </div>
 
-        <form className="order-slip label-stock reveal mx-auto mt-band" onSubmit={(e) => e.preventDefault()}>
-          <div className="order-fields">
-            <div className="order-field">
-              <label htmlFor={`${uid}-producto`} className="field-label text-muted">
+        <form className="reveal contact-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="grid gap-7 sm:grid-cols-3 sm:gap-6">
+            <div className="field grid gap-2">
+              <label htmlFor={`${uid}-p`} className="eyebrow">
                 Producto
               </label>
-              <select id={`${uid}-producto`} value={product.id} onChange={(e) => changeProduct(e.target.value)}>
+              <select id={`${uid}-p`} value={product.id} onChange={(e) => changeProduct(e.target.value)}>
                 {PRODUCTS.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.shortName}
@@ -60,12 +57,12 @@ export function OrderSlip() {
                 ))}
               </select>
             </div>
-            <div className="order-field">
-              <label htmlFor={`${uid}-aroma`} className="field-label text-muted">
+            <div className="field grid gap-2">
+              <label htmlFor={`${uid}-a`} className="eyebrow">
                 Aroma
               </label>
               <select
-                id={`${uid}-aroma`}
+                id={`${uid}-a`}
                 value={fragrance.id}
                 onChange={(e) => setFragranceId(e.target.value)}
                 disabled={product.fragrances.length < 2}
@@ -77,12 +74,12 @@ export function OrderSlip() {
                 ))}
               </select>
             </div>
-            <div className="order-field">
-              <label htmlFor={`${uid}-presentacion`} className="field-label text-muted">
+            <div className="field grid gap-2">
+              <label htmlFor={`${uid}-r`} className="eyebrow">
                 Presentación
               </label>
               <select
-                id={`${uid}-presentacion`}
+                id={`${uid}-r`}
                 value={presentation.id}
                 onChange={(e) => setPresentationId(e.target.value)}
                 disabled={product.presentations.length < 2}
@@ -95,13 +92,13 @@ export function OrderSlip() {
               </select>
             </div>
           </div>
-          <CtaZone className="mt-8">
-            <a href={href} target="_blank" rel="noopener noreferrer" className="btn btn-sage w-full">
+          <CtaZone className="mt-9">
+            <a href={href} target="_blank" rel="noopener noreferrer" className="btn btn-sage w-full sm:w-auto">
               <WhatsAppIcon className="size-5" />
               {commerce.ctaLabel}
             </a>
           </CtaZone>
-          <p className="mt-4 text-center text-small text-muted">Abre WhatsApp con tu pedido ya escrito.</p>
+          <p className="mt-4 text-small text-warm-gray">Abre WhatsApp con tu consulta ya escrita.</p>
         </form>
       </div>
     </section>

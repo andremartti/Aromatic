@@ -17,9 +17,16 @@ coinciden con el campo `name:` de cada SKILL.md, igual que el instalador
 
 - **Impeccable** ejecuta un motor propio (`impeccable/scripts/impeccable`) que se descarga
   la primera vez desde las releases oficiales de GitHub a `~/.impeccable/bin/`.
-- **No se instalaron los hooks automáticos de Impeccable** (revisión de diseño después de
-  cada edición y al terminar cada turno). Son opcionales; para activarlos:
-  `npx impeccable install --providers=claude --scope=project`.
+- **Hooks de Impeccable activos** en `.claude/settings.json` (manifiesto oficial de Claude):
+  preparan la sesión, revisan cada edición de UI con el detector y hacen una pasada al terminar
+  el turno. Se gestionan con `/impeccable hooks <on|off|status>`. El instalador oficial
+  (`npx impeccable install`) devolvió HTTP 403 al verificar el bundle firmado desde este
+  entorno; los archivos del proyecto son los mismos de la release y el manifiesto se escribió a
+  mano con el mismo contenido.
+- Emil Kowalski y Taste Skill se reinstalaron con `npx skills add`, que registra origen y hashes
+  en `skills-lock.json` (raíz del repositorio).
+- El contexto de diseño del proyecto vive en `PRODUCT.md`, `DESIGN.md` y `.impeccable/`
+  (brief de superficie, configuración del detector, sidecar del sistema y críticas).
 - Los skills de imagen (`imagegen-*`, `image-to-code`, `brandkit`) requieren una
   herramienta de generación de imágenes en el entorno.
 

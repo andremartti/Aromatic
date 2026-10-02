@@ -10,4 +10,8 @@ export function whatsappLink(message: string): string {
   return WHATSAPP_NUMBER ? `https://wa.me/${WHATSAPP_NUMBER}?text=${text}` : `https://wa.me/?text=${text}`;
 }
 
-export const GENERAL_MESSAGE = `Hola ${site.name}, me gustaría conocer sus productos y hacer un pedido.`;
+export const GENERAL_MESSAGE = `Hola ${site.name}, me gustaría hacer un pedido.`;
+
+export function fragranceMessage(fragranceName: string): string {
+  return `Hola ${site.name}, me interesa el aroma ${fragranceName}. ¿Qué productos tienen disponibles?`;
+}

@@ -19,10 +19,10 @@ export interface Fragrance {
   /** Nombre del aroma tal como aparece en el catálogo. */
   name: string;
   /**
-   * Color puramente decorativo para representar el aroma en la interfaz.
-   * No describe la composición del producto.
+   * Tinte puramente decorativo (variable CSS del design system) para
+   * representar el aroma en la interfaz. No describe la composición.
    */
-  swatch: string;
+  tint: string;
 }
 
 export interface Presentation {
@@ -33,12 +33,13 @@ export interface Presentation {
   sku: string;
   /**
    * Precio de venta en la moneda de `site.currency`.
-   * `null` = precio aún no definido → la interfaz muestra "Consultar precio".
+   * `null` = precio no definido. Aunque tenga valor, solo se muestra si
+   * `features.prices` está activo en src/config/site.ts.
    */
   price: number | null;
   /**
    * Existencias disponibles. `null` = no se controla inventario todavía
-   * (el producto se muestra como disponible bajo consulta).
+   * (la disponibilidad se confirma por WhatsApp).
    */
   stock: number | null;
 }
@@ -50,12 +51,13 @@ export interface Product {
   id: string;
   slug: string;
   category: CategoryId;
+  /** Nombre completo, siempre con la marca: "AROMATIC Suavizante". */
   name: string;
-  /** Nombre corto para pestañas y navegación. */
+  /** Nombre del producto sin la marca, para etiquetas y navegación. */
   shortName: string;
-  /** Frase corta para tarjetas. */
+  /** Frase corta para tarjetas (derivada de la descripción del catálogo). */
   shortDescription: string;
-  /** Descripción completa, basada en el catálogo. */
+  /** Descripción completa, tal como aparece en el catálogo. */
   description: string;
   fragrances: Fragrance[];
   presentations: Presentation[];
@@ -65,14 +67,16 @@ export interface Product {
    * ilustración de envase definida por `visual`.
    */
   image: string | null;
-  /** Dirección de arte para la ilustración provisional y los fondos. */
+  /** Texto alternativo de la fotografía cuando exista. */
+  imageAlt?: string;
+  /** Producto destacado: ocupa la etiqueta grande en la vitrina. */
+  featured?: boolean;
+  /** Dirección de arte para la ilustración provisional. */
   visual: {
     shape: ContainerShape;
-    /** Texto corto impreso en la etiqueta de la ilustración. */
-    label: string;
-    /** Color del líquido / envase. */
+    /** Envase por presentación cuando cambia (id de presentación → forma). */
+    shapeByPresentation?: Record<string, ContainerShape>;
+    /** Color del líquido en la ilustración (decorativo). */
     tint: string;
-    /** Color de fondo de la tarjeta. */
-    backdrop: string;
   };
 }

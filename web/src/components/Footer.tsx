@@ -1,88 +1,65 @@
 import Link from "next/link";
+import { NAV_LINKS } from "@/config/navigation";
 import { site } from "@/config/site";
 import { GENERAL_MESSAGE, whatsappLink } from "@/lib/whatsapp";
+import { CtaZone } from "./CtaZone";
 
+/**
+ * Pie: cierra la página como empezó, con el mástil AROMATIC.
+ * Las redes sociales solo aparecen cuando tienen URL en src/config/site.ts.
+ */
 export function Footer() {
   const socials = site.social.filter((s) => s.url);
-  const links = [
-    { href: "/#productos", label: "Productos" },
-    { href: "/#aromas", label: "Aromas" },
-    { href: "/#marca", label: "Sobre AROMATIC" },
-  ] satisfies { href: string; label: string }[];
-
+  const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-line bg-ivory" aria-labelledby="footer-title">
-      <div className="container-x py-20 md:py-28">
-        <div className="grid gap-16 md:grid-cols-[1.4fr_1fr_1fr]">
-          <div>
-            <p id="footer-title" className="wordmark text-3xl text-charcoal md:text-4xl">
-              AROMATIC
-            </p>
-            <p className="mt-6 max-w-xs font-serif text-xl leading-snug text-muted">{site.tagline}</p>
-          </div>
-
-          <nav aria-label="Pie de página">
-            <p className="eyebrow mb-6">Explorar</p>
-            <ul className="space-y-3">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-[0.9375rem] text-ink transition-colors hover:text-bronze">
-                    {l.label}
-                  </Link>
+    <footer className="site-footer pt-band">
+      <div className="frame">
+        <div className="footer-grid">
+          <p className="display max-w-[22ch] text-title">{site.tagline}</p>
+          <CtaZone>
+            <nav aria-label="Pie de página">
+              <ul className="footer-links">
+                {NAV_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="ink-link">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+                <li>
+                  <a href={whatsappLink(GENERAL_MESSAGE)} target="_blank" rel="noopener noreferrer" className="ink-link">
+                    WhatsApp
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </CtaZone>
+          {socials.length > 0 ? (
+            <ul className="footer-links" aria-label="Redes sociales">
+              {socials.map((social) => (
+                <li key={social.id}>
+                  <a href={social.url} target="_blank" rel="noopener noreferrer" className="ink-link">
+                    {social.label}
+                  </a>
                 </li>
               ))}
             </ul>
-          </nav>
-
-          <div>
-            <p className="eyebrow mb-6">Contacto</p>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href={whatsappLink(GENERAL_MESSAGE)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[0.9375rem] text-ink transition-colors hover:text-bronze"
-                >
-                  Contacto
-                </a>
-              </li>
-              <li>
-                <a
-                  href={whatsappLink(GENERAL_MESSAGE)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[0.9375rem] text-ink transition-colors hover:text-bronze"
-                >
-                  WhatsApp
-                </a>
-              </li>
-            </ul>
-            {socials.length > 0 && (
-              <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3" aria-label="Redes sociales">
-                {socials.map((s) => (
-                  <li key={s.id}>
-                    <a
-                      href={s.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-semibold tracking-[0.16em] text-charcoal uppercase transition-colors hover:text-bronze"
-                    >
-                      {s.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+          ) : null}
         </div>
 
-        <div className="mt-20 flex flex-col gap-4 border-t border-line pt-8 text-xs text-muted md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} AROMATIC. Todos los derechos reservados.</p>
-          <p className="tracking-[0.2em] uppercase">El cuidado que se siente</p>
-        </div>
+        <p className="footer-mark wordmark text-charcoal" aria-hidden="true">
+          {site.name}
+        </p>
+        <div className="double-rule text-charcoal" aria-hidden="true" />
+        <p className="field-label flex flex-wrap justify-between gap-x-6 gap-y-2 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] text-muted">
+          <span>
+            © {year} {site.name}
+          </span>
+          <span>
+            {site.city}, {site.country}
+          </span>
+        </p>
       </div>
     </footer>
   );
 }
-

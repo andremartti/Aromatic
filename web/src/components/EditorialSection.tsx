@@ -15,22 +15,22 @@ export function EditorialSection() {
           <picture>
             <source
               type="image/avif"
-              srcSet={`${asset("/images/scene/editorial-1440.avif")} 1440w, ${asset("/images/scene/editorial-2160.avif")} 2160w`}
-              sizes="(min-width: 1024px) 72vw, 100vw"
+              srcSet={`${asset("/images/editorial/suavizante-luz-1440.avif")} 1440w, ${asset("/images/editorial/suavizante-luz-2104.avif")} 2104w`}
+              sizes="(min-width: 1024px) 58vw, 100vw"
             />
             <source
               type="image/webp"
-              srcSet={`${asset("/images/scene/editorial-1440.webp")} 1440w, ${asset("/images/scene/editorial-2160.webp")} 2160w`}
-              sizes="(min-width: 1024px) 72vw, 100vw"
+              srcSet={`${asset("/images/editorial/suavizante-luz-1440.webp")} 1440w, ${asset("/images/editorial/suavizante-luz-2104.webp")} 2104w`}
+              sizes="(min-width: 1024px) 58vw, 100vw"
             />
             { }
             <img
-              src={asset("/images/scene/editorial-1440.webp")}
-              alt="Pétalos blancos y una fresa sobre mármol, junto a la base de los envases AROMATIC."
+              src={asset("/images/editorial/suavizante-luz-1440.webp")}
+              alt="AROMATIC Suavizante de telas bajo una luz cálida de ventana."
               loading="lazy"
               decoding="async"
               width={1440}
-              height={454}
+              height={1401}
             />
           </picture>
         </figure>

@@ -5,7 +5,6 @@
  */
 import { SITE_URL, site } from "@/config/site";
 import { getCategory } from "@/products/products";
-import { SCENE } from "@/config/scene";
 import type { Product } from "@/products/types";
 
 export function organizationJsonLd() {
@@ -31,7 +30,7 @@ export function productJsonLd(product: Product) {
     brand: { "@type": "Brand", name: site.name },
     category: getCategory(product.category)?.name,
     // Fotografía oficial: recorte del producto si existe; si no, la escena.
-    image: `${SITE_URL}${product.cutouts ? Object.values(product.cutouts)[0] : SCENE.sharp.fallback}`,
+    image: `${SITE_URL}${product.image.base}-1600.webp`,
     description: product.summary,
     additionalProperty: [
       { "@type": "PropertyValue", name: "Aroma", value: product.fragrances.map((f) => f.name).join(", ") },

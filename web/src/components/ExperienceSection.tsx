@@ -4,37 +4,33 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from "motion/react";
 import { PRODUCTS, allFragrances } from "@/products/products";
-import type { Shot } from "@/config/scene";
 import { site } from "@/config/site";
 import { joinList } from "@/lib/format";
-import { SceneStage } from "./SceneStage";
+import { ProductImage } from "./ProductImage";
 import { ArrowIcon } from "./icons";
 
 const EASE_FLOW = [0.22, 1, 0.36, 1] as const;
 
 const byId = (id: string) => PRODUCTS.find((p) => p.id === id)!;
 
-/** Limpieza → Suavidad → Fragancia, con la cámara en primer plano de cada etiqueta. */
-const CONCEPTS: { n: string; word: string; productId: string; shot: Shot; text: () => string }[] = [
+/** Limpieza → Suavidad → Fragancia, con un primer plano de cada etiqueta. */
+const CONCEPTS: { n: string; word: string; productId: string; text: () => string }[] = [
   {
     n: "01",
     word: "Limpieza",
     productId: "detergente",
-    shot: { cx: 420, cy: 868, z: 300 },
     text: () => byId("detergente").summary,
   },
   {
     n: "02",
     word: "Suavidad",
     productId: "suavizante",
-    shot: { cx: 166, cy: 862, z: 300 },
     text: () => byId("suavizante").summary,
   },
   {
     n: "03",
     word: "Fragancia",
     productId: "jabon-manos",
-    shot: { cx: 597, cy: 948, z: 240 },
     text: () => {
       const floral = PRODUCTS.filter((p) => p.fragrances.length === 1).map((p) => p.shortName.toLowerCase());
       const many = PRODUCTS.find((p) => p.fragrances.length > 1);
@@ -45,7 +41,7 @@ const CONCEPTS: { n: string; word: string; productId: string; shot: Shot; text: 
 
 /**
  * "Más que limpieza." Narración ligada al scroll: el concepto activo toma
- * protagonismo y la cámara pasa a la etiqueta del producto que lo cumple.
+ * protagonismo y el primer plano pasa a la etiqueta del producto que lo cumple.
  */
 export function ExperienceSection() {
   const ref = useRef<HTMLElement>(null);
@@ -88,14 +84,26 @@ export function ExperienceSection() {
           </ol>
 
           <div className="experience-media">
-            <SceneStage
-              products={PRODUCTS}
-              focusId={concept.productId}
-              shot={concept.shot}
-              layer="all"
-              className="experience-stage"
-              sizes="(min-width: 1024px) 900px, 760px"
-            />
+            <div className="experience-stage">
+              <AnimatePresence mode="popLayout" initial={false}>
+                <motion.div
+                  key={concept.n}
+                  className="experience-zoom"
+                  style={{ "--ratio": product.image.ratio } as React.CSSProperties}
+                  initial={{ opacity: 0, scale: 1.08 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, transition: { duration: 0.45 } }}
+                  transition={{ duration: 0.9, ease: EASE_FLOW }}
+                >
+                  <ProductImage
+                    photo={product.image}
+                    alt={`Etiqueta de ${product.name}`}
+                    sizes="(min-width: 1024px) 42vw, 90vw"
+                    className="experience-img"
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
             <div className="experience-progress" aria-hidden="true">
               <motion.span style={{ scaleY: progress }} />
             </div>

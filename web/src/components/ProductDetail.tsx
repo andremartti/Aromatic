@@ -4,11 +4,10 @@ import { Suspense, useId, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AnimatePresence, motion, useMotionValue, useReducedMotion, useSpring } from "motion/react";
 import type { Product } from "@/products/types";
-import { PRODUCTS, getCategory } from "@/products/products";
+import { getCategory, photoFor } from "@/products/products";
 import { commerce } from "@/lib/commerce";
 import { joinList } from "@/lib/format";
-import { asset } from "@/lib/asset";
-import { SceneStage } from "./SceneStage";
+import { ProductImage } from "./ProductImage";
 import { PriceTag } from "./PriceTag";
 import { CtaZone } from "./CtaZone";
 import { WhatsAppIcon } from "./icons";
@@ -50,7 +49,7 @@ function ProductDetailView({ product, initialFragranceId }: { product: Product; 
   const rotateY = useSpring(ry, { stiffness: 120, damping: 18 });
 
   if (!fragrance || !presentation) return null;
-  const cutout = product.cutouts?.[fragrance.id];
+  const photo = photoFor(product, fragrance.id);
   const href = commerce.checkoutUrl([{ product, fragrance, presentation, quantity: 1 }]);
   const soldOut = commerce.availability(presentation) === "out_of_stock";
 
@@ -71,40 +70,29 @@ function ProductDetailView({ product, initialFragranceId }: { product: Product; 
         }}
       >
         <motion.div className="detail-tilt" style={{ rotateX, rotateY, transformPerspective: 1200 }}>
-          {cutout ? (
-            <div className="detail-atmos">
-              <div className="atmos-layer" style={{ transition: "background 700ms ease" }} aria-hidden="true" />
-              <AnimatePresence mode="popLayout" initial={false}>
-                <motion.div
-                  key={fragrance.id}
-                  className="detail-cutout"
-                  initial={{ opacity: 0, scale: 0.96, y: 14 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.3 } }}
-                  transition={{ duration: 0.6, ease: EASE_FLOW }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={asset(cutout)}
-                    alt={`${product.name}, aroma ${fragrance.name}`}
-                    className="product-cutout h-full w-auto"
-                    decoding="async"
-                    fetchPriority="high"
+          <div className="detail-atmos">
+            <div className="atmos-layer" style={{ transition: "background 700ms ease" }} aria-hidden="true" />
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div
+                key={photo.base}
+                className="detail-cutout"
+                initial={{ opacity: 0, scale: 0.96, y: 14 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.3 } }}
+                transition={{ duration: 0.6, ease: EASE_FLOW }}
+              >
+                <span className="bottle-float">
+                  <ProductImage
+                    photo={photo}
+                    alt={product.fragrances.length > 1 ? `${product.name}, aroma ${fragrance.name}` : product.name}
+                    sizes="(min-width: 1024px) 30vw, 60vw"
+                    priority
                   />
-                </motion.div>
-              </AnimatePresence>
-              <span className="aromas-floor" aria-hidden="true" />
-            </div>
-          ) : (
-            <SceneStage
-              products={PRODUCTS}
-              focusId={product.id}
-              shot={product.scene.shot}
-              className="detail-stage"
-              priority
-              sizes="(min-width: 1024px) 1000px, 760px"
-            />
-          )}
+                </span>
+                <span className="bottle-shadow" aria-hidden="true" />
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </motion.div>
       </motion.div>
 

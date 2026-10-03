@@ -1,6 +1,6 @@
 ---
 name: AROMATIC
-description: Sistema "escena fotográfica" para la web de AROMATIC. La foto real de producto es la protagonista; la interfaz se retira y la cuenta con cámara, foco y tipografía editorial.
+description: Sistema "producto real" para la web de AROMATIC. Las fotos oficiales recortadas son las protagonistas; la interfaz se retira y las anima con entradas, flotación, inclinación y tipografía editorial.
 colors:
   ivory: "#f8f3ec"
   warm-white: "#fcfaf6"
@@ -91,7 +91,7 @@ components:
 
 ## Overview
 
-**North star: la escena fotográfica.** AROMATIC tiene una sola fotografía oficial con los tres productos sobre mármol, frente a una cortina con luz cálida. La web no redibuja etiquetas ni inventa envases: usa esa escena como un set y la recorre con una *cámara* (encuadre, zoom y foco). El producto elegido queda nítido, los demás se desenfocan y una palabra gigante en Bodoni pasa por detrás del envase. La interfaz toma sus colores de la propia foto: marfil de la cortina, crema del mármol, rosa del líquido y dorado de la etiqueta.
+**North star: el producto real.** AROMATIC tiene una foto oficial de cada envase (detergente, suavizante y jabón líquido). La web los recorta y los pone en escena: los envases suben desde el piso, se asientan, flotan y se inclinan con el ratón; una palabra gigante en Bodoni pasa por detrás y su contorno por delante, para que se lea completa. La web no redibuja etiquetas ni inventa envases. La interfaz toma sus colores de las fotos: marfil, crema, el dorado de la etiqueta y los tonos de cada líquido.
 
 Regla de oro: **producto real > etiqueta real > identidad AROMATIC > composición > animación.**
 
@@ -118,14 +118,14 @@ Bodoni Moda (eje opsz) para la voz editorial: palabra gigante del hero, titulare
 
 ## Layout
 
-Mobile-first con `.frame` (máximo 90rem más gutter fluido). Desde 64rem el hero es una escena centrada al 46% del ancho, con selector a la izquierda y ficha a la derecha. Al bajar, la escena se fija (sticky) y se desplaza a la derecha mientras pasan los capítulos de cada producto (`--u` ligado al scroll). En móvil, la escena va arriba y la ficha debajo, con un alto calculado para que el CTA quepa en la primera pantalla incluso a 375×667. Además, se puede deslizar (swipe) para cambiar de producto.
+Mobile-first con `.frame` (máximo 90rem más gutter fluido). **Página de inicio:** AROMATIC a todo el ancho y los tres envases agrupados sobre el piso (detergente al centro y al frente), con el lema y los CTA abajo. **Catálogo:** desde 64rem son tres columnas: selector, escenario (con el producto elegido al centro y los otros dos asomando a los lados) y ficha. En móvil, el escenario va arriba y el selector y la ficha debajo; se cambia de producto deslizando el dedo.
 
 ## Elevation & Depth
 
-La profundidad viene de la foto, no de sombras:
-1. Escena desenfocada (capa base).
-2. Palabra gigante.
-3. Producto nítido recortado con máscara alfa, por delante de la palabra.
+La profundidad viene de capas, no de tarjetas:
+1. Palabra gigante en relleno (detrás).
+2. Envase recortado, con una sombra de contacto que se encoge cuando el envase sube.
+3. Contorno de la misma palabra (delante), para que se lea aunque el envase la cruce.
 
 ### Shadow Vocabulary
 - `veil`: superficies elevadas sutiles.
@@ -137,8 +137,14 @@ Casi recto: radio de 1 px en botones, chips y campos. El único elemento redonde
 
 ## Components
 
-### Escena (`SceneStage`)
-Recibe la foto, un encuadre `{cx, cy, z}` en píxeles de la foto original de 720×1440 y el producto en foco. Muestra la capa desenfocada más una máscara nítida por producto; la cámara transiciona con un FLIP de Motion (0.85 s, AROMATIC FLOW). Los laterales del hero son botones reales ("Ver AROMATIC …") con escala de hover ≤ 1.04.
+### Foto de producto (`ProductImage`)
+Recorte con fondo transparente en AVIF/WebP (alturas de 800 y 1600 px), con ancho y alto definidos para evitar saltos de layout. `stature` da la altura relativa del envase real para componerlos juntos.
+
+### Página de inicio (`HomeIntro`)
+Las letras de AROMATIC entran una por una (60 ms entre letras, con desenfoque). Los envases suben desde el piso con una leve inclinación inicial (el centro primero) y luego flotan en bucle lento (6.5 s). Con el ratón, cada envase se desplaza con una profundidad distinta (parallax); al bajar, se separan. Cada envase es un enlace a su ficha.
+
+### Catálogo (`ProductUniverse`)
+El envase elegido entra desde el lado hacia el que se avanza y sale por el opuesto (0.75 s, AROMATIC FLOW, con giro de 7° y desenfoque), flota y se inclina hasta 6° con el ratón. Los laterales son botones reales ("Ver AROMATIC …") con escala de hover ≤ 1.04.
 
 ### Buttons
 `btn-solid` (charcoal, primario de navegación), `btn-line` (contorno, secundario) y `btn-sage` (WhatsApp). Alto de 52 px; al presionar, `scale(.97)` en 140 ms.
@@ -154,7 +160,7 @@ Al cambiar de aroma, la nueva atmósfera se expande con `clip-path: circle()` de
 
 ## Motion
 
-- `ease-flow` `cubic-bezier(.22,1,.36,1)`: cambios de producto, cámara y revelados.
+- `ease-flow` `cubic-bezier(.22,1,.36,1)`: cambios de producto, entradas y revelados.
 - Entrada del hero en 12 pasos, solo con CSS (`in-fade`, `in-rise`, `in-reveal`, `in-draw`, `in-settle`, `in-focus` con `--d`).
 - Revelados de sección con IntersectionObserver (`.reveal`, `.reveal-text`, `.reveal-side`, `.reveal-line`), activos solo con `html[data-js]`.
 - Transición de página de 300 a 450 ms (`page-enter`, fill backwards).
@@ -164,7 +170,7 @@ Al cambiar de aroma, la nueva atmósfera se expande con `clip-path: circle()` de
 ## Do's and Don'ts
 
 ### Do:
-- Usar la fotografía oficial y sus recortes; encuadrar, enfocar y desenfocar.
+- Usar las fotografías oficiales y sus recortes; animar el envase completo (entrar, flotar, inclinar), nunca deformarlo.
 - Recolorear solo el líquido del jabón para cada aroma, sin tocar reflejos, transparencia ni etiqueta.
 - Mostrar "Conocer producto", "Solicitar información" y "Consultar producto" como CTAs.
 

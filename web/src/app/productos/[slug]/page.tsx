@@ -8,7 +8,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ProductDetail } from "@/components/ProductDetail";
-import { SceneStage } from "@/components/SceneStage";
+import { ProductImage } from "@/components/ProductImage";
 import { JsonLd } from "@/components/JsonLd";
 import { ArrowIcon } from "@/components/icons";
 
@@ -79,8 +79,8 @@ export default async function ProductPage({ params }: Params) {
                 <li key={p.id} className="reveal">
                   <Link href={`/productos/${p.slug}/`} className="related-card group">
                     <div className="related-stage">
-                      <div className="related-media absolute inset-0">
-                        <SceneStage products={PRODUCTS} focusId={p.id} shot={p.scene.shot} className="absolute inset-0" sizes="600px" />
+                      <div className="related-media">
+                        <ProductImage photo={p.image} alt="" sizes="(min-width: 640px) 30vw, 70vw" />
                       </div>
                     </div>
                     <p className="eyebrow mt-6">{p.use}</p>

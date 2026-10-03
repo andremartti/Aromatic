@@ -9,20 +9,22 @@
  *  src/config/site.ts). Para activarlos, escriba `price` en cada presentación
  *  y active el interruptor. Los precios del catálogo impreso NO se cargaron.
  *
- *  IMÁGENES: la escena fotográfica oficial vive en src/config/scene.ts. Cada
- *  producto define su encuadre (`scene.shot`), su zona (`scene.box`) y su
- *  máscara de foco. `cutouts` lista fotos recortadas por aroma (solo cambia el
- *  color del líquido; la etiqueta es la original).
+ *  IMÁGENES: fotos oficiales recortadas en /public/images/products/
+ *  (`image`). `cutouts` lista la foto del jabón por aroma: solo cambia el
+ *  color del líquido; la etiqueta es la original.
  * ============================================================================
  */
 import { FRAGRANCES } from "./fragrances";
-import type { Category, CategoryId, Fragrance, Product } from "./types";
+import type { Category, CategoryId, Fragrance, Product, ProductPhoto } from "./types";
 
 export const CATEGORIES: Category[] = [
   { id: "suavizante", name: "Suavizante" },
   { id: "detergente", name: "Detergente líquido para lavadora" },
   { id: "jabon-manos", name: "Jabón líquido para manos" },
 ];
+
+/** Foto del jabón líquido por aroma (misma toma, color de líquido distinto). */
+const JABON = (aroma: string): ProductPhoto => ({ base: `/images/products/jabon-${aroma}`, ratio: 850 / 1778 });
 
 export const PRODUCTS: Product[] = [
   {
@@ -38,11 +40,8 @@ export const PRODUCTS: Product[] = [
       "Suavizante líquido perfumado que proporciona sensación de suavidad y frescura, con un perfume agradable, sutil y duradero. También facilita el planchado.",
     fragrances: [FRAGRANCES.floral],
     presentations: [{ id: "galon", label: "Galón", sku: "SUA-GAL", price: null, stock: null }],
-    scene: {
-      shot: { cx: 167, cy: 738, z: 760 },
-      box: { x: 30, y: 395, w: 278, h: 688 },
-      mask: "/images/scene/mask-suavizante.png",
-    },
+    image: { base: "/images/products/suavizante", ratio: 868 / 1734 },
+    stature: 1,
   },
   {
     id: "detergente",
@@ -57,11 +56,8 @@ export const PRODUCTS: Product[] = [
       "Detergente líquido para lavadora, apto para todo tipo de ropa, con un agradable y duradero aroma. Su fórmula está enriquecida con jabón natural para ayudar a cuidar y alargar la vida de las prendas.",
     fragrances: [FRAGRANCES.floral],
     presentations: [{ id: "galon", label: "Galón", sku: "DET-GAL", price: null, stock: null }],
-    scene: {
-      shot: { cx: 421, cy: 732, z: 770 },
-      box: { x: 283, y: 380, w: 217, h: 700 },
-      mask: "/images/scene/mask-detergente.png",
-    },
+    image: { base: "/images/products/detergente", ratio: 1068 / 1964 },
+    stature: 1.06,
     featured: true,
   },
   {
@@ -88,18 +84,15 @@ export const PRODUCTS: Product[] = [
       { id: "2l", label: "2 Litros", sku: "JAB-2L", price: null, stock: null },
       { id: "galon", label: "Galón", sku: "JAB-GAL", price: null, stock: null },
     ],
-    scene: {
-      shot: { cx: 598, cy: 872, z: 560 },
-      box: { x: 503, y: 645, w: 190, h: 456 },
-      mask: "/images/scene/mask-jabon.png",
-    },
+    image: JABON("frutas-tropicales"),
+    stature: 0.74,
     cutouts: {
-      chicle: "/images/jabon/jabon-chicle.webp",
-      floral: "/images/jabon/jabon-floral.webp",
-      "frutas-tropicales": "/images/jabon/jabon-frutas-tropicales.webp",
-      coco: "/images/jabon/jabon-coco.webp",
-      cherry: "/images/jabon/jabon-cherry.webp",
-      fresh: "/images/jabon/jabon-fresh.webp",
+      chicle: JABON("chicle"),
+      floral: JABON("floral"),
+      "frutas-tropicales": JABON("frutas-tropicales"),
+      coco: JABON("coco"),
+      cherry: JABON("cherry"),
+      fresh: JABON("fresh"),
     },
   },
 ];
@@ -121,4 +114,9 @@ export function allFragrances(): Fragrance[] {
 
 export function productsWithFragrance(fragranceId: string): Product[] {
   return PRODUCTS.filter((p) => p.fragrances.some((f) => f.id === fragranceId));
+}
+
+/** Foto del producto para un aroma (o la principal). */
+export function photoFor(product: Product, fragranceId?: string): ProductPhoto {
+  return (fragranceId && product.cutouts?.[fragranceId]) || product.image;
 }

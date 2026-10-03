@@ -1,43 +1,47 @@
 # Assets de diseño: procedencia
 
-Todo lo que se ve en la web sale de **una única fotografía oficial** de AROMATIC:
-`aromatic-escena-original.jpg` (720×1440, los tres productos sobre mármol). Este archivo queda fuera
-de `public/` y no se publica.
+Las imágenes de producto salen de **tres fotografías oficiales** de AROMATIC (1052×1024), guardadas en
+`originales/`. Esta carpeta no se publica.
 
-**Reglas aplicadas:** las etiquetas, los logos, los textos de etiqueta y la composición no se
-retocan. Lo único que se modifica es el **color del líquido** del jabón líquido, para mostrar cada
-aroma, conservando los reflejos, la transparencia y la forma del envase.
+| Archivo | Producto |
+|---|---|
+| `originales/detergente.jpg` | AROMATIC Detergente Líquido, galón |
+| `originales/suavizante.jpg` | AROMATIC Suavizante, galón |
+| `originales/jabon.jpg` | AROMATIC Jabón Líquido, 500 mL (sobre un pedestal de mármol) |
+
+**Reglas aplicadas:** las etiquetas, los logos, los textos de etiqueta y los envases no se retocan.
+Lo único que se modifica es el **color del líquido** del jabón para mostrar cada aroma, conservando
+los reflejos, la transparencia y la forma del envase.
 
 ## Proceso (`pipeline/`)
 
-1. **Escala ×3** (`sr.py`): superresolución EDSR ×3 con OpenCV `dnn_superres`, procesada en
-   mosaicos con solape. Modelo: `EDSR_x3.pb` del repositorio `Saafke/EDSR_Tensorflow`.
-   Ejemplo: `python sr.py 3 ../aromatic-escena-original.jpg up3.png`.
-2. **Máscaras** (`seg.py`): GrabCut con polígonos seguros por producto, con refinado de bordes →
-   `public/images/scene/mask-{suavizante,detergente,jabon}.png`
-   (1080×2160, el canal alfa es la máscara).
-3. **Escena** (Pillow): `scene-1440` y `scene-2160` en AVIF/WebP (más un respaldo JPG en 1440);
-   `scene-blur` es la misma escena desenfocada (la capa base del cambio de foco).
-4. **Aromas del jabón** (`recolor.py`): el jabón se recorta con un polígono suavizado (Chaikin)
-   y el líquido se recolorea en el espacio LAB. El peso del cambio solo es mayor que cero dentro
-   del envase, por debajo del hombro (y ≥ 748) y fuera de la franja de la etiqueta
-   (y 870–1048), así que la etiqueta y el dosificador quedan como en el original.
-   → `public/images/jabon/jabon-{chicle,floral,frutas-tropicales,coco,cherry,fresh}.webp`.
-   **Chicle** es el color original de la foto.
-5. **Editorial**: `editorial-1440/2160` es un recorte del mármol con pétalos (y ≥ 1063). Se cortó
-   por debajo de las etiquetas para que no aparezca ningún texto de etiqueta fuera de contexto.
-6. **OG** (`public/og.jpg`): composición HTML de 1200×630 con la escena a la derecha, el wordmark y
-   el lema en Bodoni Moda y Jost. Se capturó con Playwright.
+1. **Recorte** (`1-recorte.py`): se quita el fondo con rembg y el modelo `isnet-general-use`. En la
+   foto del jabón también se quita el pedestal. El hueco de las asas queda transparente.
+2. **Escala ×2** (`2-escala.py`): recorte al contenido (más 14 px de margen) y superresolución EDSR ×2
+   (OpenCV `dnn_superres`). El canal alfa se escala por separado.
+3. **Aromas del jabón** (`3-aromas-jabon.py`): el líquido se recolorea en el espacio LAB. Solo se
+   cambian los píxeles de tono ámbar con croma, fuera de la franja de la etiqueta (y 731–1594 en la
+   imagen escalada). La etiqueta, la bomba y el plástico transparente quedan como en el original.
+   El color original (ámbar) se usa para **Frutas tropicales**.
+4. **Exportación** (Pillow): `public/images/products/<nombre>-{800,1600}.{avif,webp}`, con fondo
+   transparente. `<nombre>` es `suavizante`, `detergente` o `jabon-<aroma>`.
+5. **Editorial** (`public/images/editorial/suavizante-luz-*`): es la foto original del suavizante,
+   con su luz de ventana, escalada ×2 con EDSR y sin recorte.
+6. **OG** (`public/og.jpg`): composición HTML de 1200×630 con los tres recortes, capturada con
+   Playwright.
 7. **Favicon** (`public/favicon.svg`): glifo "A" de Bodoni Moda (opsz 6, wght 600) extraído con
-   fontTools, sobre charcoal `#24201d`.
+   fontTools.
 
-Los scripts usan rutas relativas al directorio de trabajo en el que se ejecutaron; sirven como
-registro del proceso, no como build automático.
+Los scripts usan rutas relativas a la carpeta `pipeline/`. Sirven como registro del proceso, no
+como build automático. Requieren `rembg`, `onnxruntime`, `opencv-contrib-python` y `Pillow`.
 
-## Advertencia sobre la fotografía
+## Advertencia sobre las etiquetas
 
-Las etiquetas de la foto contienen textos que **no coinciden con la información oficial** del
-catálogo. Por ejemplo: "Fragancia Lavanda y Vainilla" (el suavizante es Floral), "500 mL" en envases
-de galón, "Biodegradable" e "Ingredientes Naturales", "Elimina 99.9% gérmenes" y erratas. Por la
-regla de no rediseñar etiquetas se dejaron intactos, y la web nunca repite esas afirmaciones en su
-propio texto. Se recomienda reemplazar la foto por una sesión oficial con las etiquetas definitivas.
+Las etiquetas de las fotos tienen textos que **no coinciden del todo con el catálogo**:
+
+- El envase del jabón dice **"DETERSIVO LÍQUIDO"**, no "Jabón líquido".
+- Las tres etiquetas dicen "Ingredientes Biodegradables", "Fórmula Eficaz" y "Fragancia Floral y
+  Fresca". El jabón y el detergente dicen además "Limpia, Suaviza y Protege".
+
+Por la regla de no rediseñar etiquetas se dejaron intactos, y la web nunca repite esas afirmaciones
+en su propio texto.

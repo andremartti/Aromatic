@@ -3,8 +3,6 @@
  * Cada producto tiene presentaciones (variantes) con su propio precio, SKU e
  * inventario, para servir más adelante a un carrito o una conexión con inventario.
  */
-import type { Box, Shot } from "@/config/scene";
-
 export type CategoryId = "suavizante" | "detergente" | "jabon-manos";
 
 export interface Category {
@@ -52,14 +50,25 @@ export interface Product {
   description: string;
   fragrances: Fragrance[];
   presentations: Presentation[];
-  /** Encuadre de cámara y zona del producto en la escena fotográfica. */
-  scene: { shot: Shot; box: Box; mask: string };
+  /** Fotografía recortada del producto (fondo transparente). */
+  image: ProductPhoto;
   /**
-   * Fotografía recortada del producto por aroma (id de aroma → ruta en /public).
-   * Solo cambia el color del líquido; la etiqueta es la original.
-   * Si un aroma no tiene foto, se usa la escena.
+   * Fotografía por aroma (id de aroma → foto). Solo cambia el color del
+   * líquido; la etiqueta es la original. Si un aroma no tiene foto, se usa `image`.
    */
-  cutouts?: Record<string, string>;
-  /** Producto destacado en el primer encuadre. */
+  cutouts?: Record<string, ProductPhoto>;
+  /** Altura relativa del envase real (galón = 1) para componer los productos juntos. */
+  stature: number;
+  /** Producto destacado al cargar. */
   featured?: boolean;
+}
+
+/**
+ * Foto de producto exportada en dos alturas: `${base}-800` y `${base}-1600`,
+ * en AVIF y WebP (ver web/design-assets/README.md).
+ */
+export interface ProductPhoto {
+  base: string;
+  /** Proporción ancho / alto del archivo. */
+  ratio: number;
 }

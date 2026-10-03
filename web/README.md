@@ -27,8 +27,7 @@ En los pull requests solo compila y verifica.
 
 | Qué | Dónde |
 |---|---|
-| Productos, descripciones, aromas, presentaciones, precios, encuadre en la escena | `src/products/products.ts` |
-| Fotografía de escena (rutas, texto alternativo) | `src/config/scene.ts` |
+| Productos, descripciones, aromas, presentaciones, precios, fotos | `src/products/products.ts` |
 | Tinte decorativo de cada aroma | `src/products/fragrances.ts` (tokens en `src/app/globals.css`) |
 | Mostrar u ocultar precios | `features.prices` en `src/config/site.ts` |
 | Número de WhatsApp (`WHATSAPP_NUMBER`) | local: `NEXT_PUBLIC_WHATSAPP_NUMBER` en `web/.env.local` · publicado: variable de repositorio `WHATSAPP_NUMBER` |
@@ -54,27 +53,25 @@ código de país) y vuelva a compilar. Mientras esté vacío, los botones abren 
 ya escrito y el cliente elige el contacto: nunca se usa un número inventado.
 
 ### Fotografías
-La web usa **una sola fotografía oficial** (los tres productos juntos) como escena. Cada producto
-define en `products.ts` un encuadre `scene.shot` (`cx`, `cy`, `z`, en píxeles de la foto original de
-720×1440), una caja `scene.box` y una máscara `scene.mask`. La "cámara" encuadra, enfoca ese
-producto y desenfoca los demás. Las etiquetas nunca se redibujan; solo el líquido del jabón cambia
-de color para cada aroma (`cutouts`). El proceso y la procedencia de cada imagen están en
-`design-assets/README.md`.
+Cada producto tiene su foto oficial recortada (fondo transparente) en `public/images/products/`,
+exportada en AVIF y WebP a 800 y 1600 px de alto: `<nombre>-800.avif`, `<nombre>-1600.webp`, etc.
+En `products.ts`, `image` apunta a la foto (`base` sin sufijo y `ratio` = ancho / alto) y `cutouts` a
+la foto del jabón por aroma. `stature` es la altura relativa del envase real (galón = 1), que se usa
+para componer los tres juntos. El proceso está en `design-assets/README.md`.
 
-Cuando exista una sesión de fotos oficial: reemplace los archivos de `public/images/scene/` con los
-mismos nombres, regenere las máscaras y ajuste `shot` y `box` de cada producto.
+Para cambiar una foto: recórtela con el proceso de `design-assets/pipeline/`, expórtela con los
+mismos nombres y actualice `ratio` si cambian sus proporciones.
 
 ### Redes sociales
 En `site.social` deje la URL vacía hasta tener la cuenta oficial; los enlaces sin URL no se
 muestran. Al completarlas aparecen en el pie de página y en los datos estructurados.
 
 ### Nuevos productos
-Agregue la categoría en `CATEGORIES` y el producto en `PRODUCTS`. Como el hero recorre una sola
-fotografía, el producto nuevo debe aparecer en esa foto (o en una nueva escena) con su `shot`, su
-`box` y su máscara. `featured: true` marca el producto enfocado al cargar. La página propia
+Agregue la categoría en `CATEGORIES` y el producto en `PRODUCTS`, con su foto recortada (`image`) y su
+`stature`. `featured: true` marca el producto que aparece primero en el catálogo. La página propia
 (`/productos/<slug>/`), "Encuentra tu aroma", el formulario de solicitud, el sitemap y WhatsApp se
-generan solos. Revise los textos editoriales (por ejemplo, "Seis aromas para el jabón líquido") si
-el catálogo cambia.
+generan solos. La página de inicio muestra tres envases: si el catálogo cambia, revise `LINEUP` en
+`HomeIntro.tsx` y textos como "Seis aromas para el jabón líquido".
 
 ## Arquitectura
 
@@ -84,7 +81,7 @@ src/
     layout.tsx  page.tsx  template.tsx (transición de página)  not-found.tsx
     productos/[slug]/page.tsx  robots.ts  sitemap.ts  fonts.ts  globals.css (design tokens)
   components/
-    Navbar  ProductUniverse (hero + descubrimiento)  SceneStage (cámara sobre la foto)
+    Navbar  HomeIntro (página de inicio)  ProductUniverse (catálogo)  ProductImage (foto recortada)
     ExperienceSection  FragranceSection  EditorialSection  OrderSlip  Footer
     ProductDetail  PriceTag  WhatsAppButton  CtaZone  RevealObserver  JsonLd  icons.tsx
   products/      datos del catálogo (fuente única)
@@ -92,8 +89,8 @@ src/
     commerce.ts  capa de comercio (hoy WhatsApp)
     format.ts    precios (respeta features.prices), listas
     whatsapp.ts  structured-data.ts  asset.ts
-  config/        sitio, escena, funcionalidades y navegación
-design-assets/   foto original y proceso de imagen (no se publica)
+  config/        sitio, funcionalidades y navegación
+design-assets/   fotos originales y proceso de imagen (no se publica)
 ```
 
 **Preparado para ecommerce.** `lib/commerce.ts` define la interfaz `CommerceProvider`
@@ -102,11 +99,12 @@ design-assets/   foto original y proceso de imagen (no se publica)
 reemplaza `commerce`: los componentes no cambian. Con `stock: 0` el detalle muestra "Agotado".
 Si hiciera falta backend, se quita `output: "export"` de `next.config.ts`.
 
-**Motion (AROMATIC FLOW).** Curva `cubic-bezier(.22,1,.36,1)`. La entrada del hero es CSS
-(12 pasos). La cámara de la escena es una transición `layout` de Motion. El desplazamiento de la
-escena en escritorio y la narración de "Más que limpieza." están ligados al scroll. Los revelados de
-sección ocurren una sola vez con un único IntersectionObserver. Todo respeta "reducir movimiento"
-y el contenido es visible sin JavaScript.
+**Motion (AROMATIC FLOW).** Curva `cubic-bezier(.22,1,.36,1)`. La entrada de la página de inicio es
+CSS (letras y envases), así que corre antes de hidratar. La flotación de los envases es un bucle CSS
+lento. El parallax, la inclinación con el ratón y el cambio de producto usan Motion. La narración de
+"Más que limpieza." está ligada al scroll. Los revelados de sección ocurren una sola vez con un
+único IntersectionObserver. Todo respeta "reducir movimiento" y el contenido es visible sin
+JavaScript.
 
 ## Calidad verificada
 

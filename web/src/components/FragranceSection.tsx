@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { PRODUCTS, allFragrances, productsWithFragrance } from "@/products/products";
+import { PRODUCTS, allFragrances, photoFor, productsWithFragrance } from "@/products/products";
 import { joinList } from "@/lib/format";
 import { fragranceMessage, whatsappLink } from "@/lib/whatsapp";
-import { asset } from "@/lib/asset";
+import { ProductImage } from "./ProductImage";
 import { CtaZone } from "./CtaZone";
 import { ArrowIcon, WhatsAppIcon } from "./icons";
 
@@ -45,7 +45,7 @@ export function FragranceSection() {
   const [layers, setLayers] = useState<Layer[]>([{ key: 0, tint: selected.tint, x: 50, y: 50 }]);
   const sectionRef = useRef<HTMLElement>(null);
   const products = productsWithFragrance(selected.id);
-  const image = jabon?.cutouts?.[selected.id];
+  const image = jabon?.cutouts?.[selected.id] ? photoFor(jabon, selected.id) : null;
 
   function choose(id: string, el: HTMLElement) {
     if (id === selectedId) return;
@@ -142,18 +142,17 @@ export function FragranceSection() {
                 exit={{ opacity: 0, scale: 0.96, y: -10, transition: { duration: 0.35, ease: EASE_FLOW } }}
                 transition={{ duration: 0.7, ease: EASE_FLOW }}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={asset(image)}
-                  alt={`${jabon?.name}, aroma ${selected.name}`}
-                  className="product-cutout aromas-float h-full w-auto"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <span className="bottle-float">
+                  <ProductImage
+                    photo={image}
+                    alt={`${jabon?.name}, aroma ${selected.name}`}
+                    sizes="(min-width: 1024px) 24vw, 50vw"
+                  />
+                </span>
+                <span className="bottle-shadow" aria-hidden="true" />
               </motion.div>
             ) : null}
           </AnimatePresence>
-          <span className="aromas-floor" aria-hidden="true" />
         </div>
 
         <div className="aromas-detail">

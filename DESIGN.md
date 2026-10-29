@@ -158,6 +158,15 @@ Barra fija que se comprime al pasar los 24 px de scroll: se reduce levemente (sc
 ### Atmósfera de aroma
 Al cambiar de aroma, la nueva atmósfera se expande con `clip-path: circle()` desde la opción elegida, durante 1.1 s. Encima flotan 8 partículas desenfocadas en posiciones fijas. No hay frutas, flores ni burbujas literales.
 
+### Tienda (carrito, checkout, "Mi pedido")
+Misma voz que el sitio: marfil, carbón y salvia. El carrito es un panel lateral con trampa de foco; el checkout usa campos de 48 px con etiqueta visible, errores debajo del campo y un resumen fijo a la derecha en escritorio. Los avisos (modo de pruebas, errores) son superficies tintadas con filete de 1 px, nunca una barra lateral gruesa.
+
+### Panel administrativo (`/admin`)
+Interfaz de trabajo: una sola familia sans (Jost) en escala fija y densa; Bodoni solo en el título de cada página. Barra lateral en una segunda capa neutra (`#f2eadf`), paneles `warm-white` con filete de 1 px, tablas con números tabulares que en móvil se convierten en fichas. Estados en píldoras con punto: salvia (bueno), dorado (pendiente), alerta (malo), beige (en curso), gris (neutro). Acciones sensibles con confirmación en línea (sin ventanas modales). El gráfico de ingresos es de una sola serie en el dorado de la etiqueta con croma reforzado (`#a87c36`), columnas de máx. 24 px con punta redondeada, tooltip con teclado y tabla equivalente. Estilos en `web/src/app/admin/admin.css` (solo se cargan en el panel).
+
+### Guía de envío
+Hoja A4 en blanco y negro para imprimir (una por página): remitente y destinatario en dos columnas, destinatario en tamaño grande, rejilla de datos de envío, código de barras Code128 del número de guía, QR y líneas de firma. Marca de agua "PRUEBA" en pedidos de prueba.
+
 ## Motion
 
 - `ease-flow` `cubic-bezier(.22,1,.36,1)`: cambios de producto, entradas y revelados.
@@ -175,7 +184,7 @@ Al cambiar de aroma, la nueva atmósfera se expande con `clip-path: circle()` de
 - Mostrar "Conocer producto", "Solicitar información" y "Consultar producto" como CTAs.
 
 ### Don't:
-- No mostrar precios en ningún lugar (cards, ficha, metadata ni JSON-LD).
+- No mostrar precios inventados: solo los que el negocio carga en el panel. Sin precio, la presentación no se vende en línea. Nunca precios en metadata ni JSON-LD.
 - No redibujar etiquetas, logos ni envases.
 - No inventar certificaciones, estadísticas, testimonios, redes, teléfonos ni direcciones.
 - No usar ilustraciones literales de aromas (frutas, flores, burbujas).

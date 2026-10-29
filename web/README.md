@@ -23,6 +23,15 @@ En los pull requests solo compila y verifica.
 - **Dominio propio:** Settings → Pages → *Custom domain*. Con dominio propio la web vive en la raíz:
   en el flujo cambie `NEXT_PUBLIC_BASE_PATH` a vacío y `NEXT_PUBLIC_SITE_URL` al dominio.
 
+## Tienda en línea y panel
+
+Con `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY` definidos (variables de repositorio
+`SUPABASE_URL` y `SUPABASE_ANON_KEY` en GitHub), el sitio agrega la tienda (`/tienda/`), el checkout,
+"Mi pedido" (`/pedido/`) y el panel privado (`/admin/`). Precios, inventario, zonas de envío, métodos
+de pago y personal se administran desde el panel y viven en la base de datos; el sitio nunca envía
+precios al servidor. Sin esas variables, el sitio funciona como catálogo con pedidos por WhatsApp.
+Instalación, despliegue y activación de pagos: [`docs/TIENDA.md`](../docs/TIENDA.md).
+
 ## Lo que se edita sin tocar diseño
 
 | Qué | Dónde |
@@ -84,20 +93,24 @@ src/
     Navbar  HomeIntro (página de inicio)  ProductUniverse (catálogo)  ProductImage (foto recortada)
     ExperienceSection  FragranceSection  EditorialSection  OrderSlip  Footer
     ProductDetail  PriceTag  WhatsAppButton  CtaZone  RevealObserver  JsonLd  icons.tsx
-  products/      datos del catálogo (fuente única)
+    shop/        tienda: ShopProvider (catálogo del servidor + carrito), CartDrawer, CheckoutView,
+                 CardPayment (SDK de PixelPay), OrderView ("Mi pedido")
+    admin/       panel: AdminProvider (sesión), AdminShell, vistas de resumen, pedidos, envíos,
+                 guías (guides.ts: QR, Code128, PDF), clientes, productos y ajustes
+  app/tienda  app/checkout  app/pedido  app/admin/*   páginas de la tienda y del panel
+  products/      datos del catálogo (textos, fotos, aromas)
   lib/
-    commerce.ts  capa de comercio (hoy WhatsApp)
+    shop/        cliente de las funciones de servidor, montos, validación del checkout
+    commerce.ts  capa de comercio por WhatsApp (sitio sin tienda)
     format.ts    precios (respeta features.prices), listas
     whatsapp.ts  structured-data.ts  asset.ts
   config/        sitio, funcionalidades y navegación
 design-assets/   fotos originales y proceso de imagen (no se publica)
 ```
 
-**Preparado para ecommerce.** `lib/commerce.ts` define la interfaz `CommerceProvider`
-(`availability`, `checkoutUrl`) y el tipo `CartLine`. Cada presentación ya tiene `sku`, `price` y
-`stock`. Para conectar carrito, checkout, pagos o inventario se implementa otro proveedor y se
-reemplaza `commerce`: los componentes no cambian. Con `stock: 0` el detalle muestra "Agotado".
-Si hiciera falta backend, se quita `output: "export"` de `next.config.ts`.
+**Comercio.** Con Supabase configurado, precios, inventario y pedidos vienen del servidor
+(`supabase/`, ver `docs/TIENDA.md`) y el sitio sigue siendo una exportación estática. Sin Supabase,
+`lib/commerce.ts` mantiene el flujo de pedidos por WhatsApp.
 
 **Motion (AROMATIC FLOW).** Curva `cubic-bezier(.22,1,.36,1)`. La entrada de la página de inicio es
 CSS (letras y envases), así que corre antes de hidratar. La flotación de los envases es un bucle CSS

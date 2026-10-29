@@ -1,0 +1,34 @@
+# Configuración de la CLI de Supabase para AROMATIC.
+# Despliegue: ver docs/TIENDA.md (supabase link, db push, functions deploy).
+project_id = "aromatic"
+
+[api]
+# La tienda no usa la API automática (PostgREST): todo pasa por las funciones.
+# El esquema privado `app` NO debe agregarse a los esquemas expuestos.
+schemas = ["public", "graphql_public"]
+
+[auth]
+site_url = "https://andremartti.github.io/Aromatic/admin/"
+additional_redirect_urls = ["http://localhost:3000/admin/"]
+# Solo el personal tiene cuentas. Nadie puede registrarse solo.
+enable_signup = false
+
+# Las funciones verifican por su cuenta lo que necesitan (sesión del personal,
+# token del pedido, firma/token del webhook), por eso no se exige JWT en la puerta.
+[functions.store]
+verify_jwt = false
+
+[functions.checkout]
+verify_jwt = false
+
+[functions.payment]
+verify_jwt = false
+
+[functions.payment-webhook]
+verify_jwt = false
+
+[functions.order-status]
+verify_jwt = false
+
+[functions.admin]
+verify_jwt = false

@@ -8,7 +8,7 @@ import { getCategory, photoFor } from "@/products/products";
 import { commerce } from "@/lib/commerce";
 import { joinList } from "@/lib/format";
 import { ProductImage } from "./ProductImage";
-import { PriceTag } from "./PriceTag";
+import { AddToCart } from "./shop/AddToCart";
 import { CtaZone } from "./CtaZone";
 import { WhatsAppIcon } from "./icons";
 
@@ -112,7 +112,6 @@ function ProductDetailView({ product, initialFragranceId }: { product: Product; 
           {product.description}
         </p>
 
-        <PriceTag presentation={presentation} className="mt-6 text-title" />
 
         <div className="detail-options in-rise" style={{ "--d": "700ms" } as React.CSSProperties}>
           <fieldset>
@@ -163,23 +162,34 @@ function ProductDetailView({ product, initialFragranceId }: { product: Product; 
           </fieldset>
         </div>
 
-        <CtaZone className="in-rise mt-9">
-          {soldOut ? (
-            <button type="button" disabled className="btn btn-line w-full cursor-not-allowed opacity-60 sm:w-auto">
-              Agotado
-            </button>
-          ) : (
-            <a href={href} target="_blank" rel="noopener noreferrer" className="btn btn-sage w-full sm:w-auto">
-              <WhatsAppIcon className="size-5" />
-              {commerce.ctaLabel}
-            </a>
-          )}
-        </CtaZone>
-        <p className="mt-4 text-small text-warm-gray">
-          {soldOut
-            ? `${presentation.label} no está disponible por ahora.`
-            : `Abre WhatsApp con tu consulta: ${product.shortName}, ${fragrance.name}, ${presentation.label}.`}
-        </p>
+        <div className="in-rise mt-9">
+          <AddToCart
+            slug={product.slug}
+            sku={presentation.sku}
+            fragranceId={product.fragrances.length ? fragrance.id : null}
+            fallback={
+              <>
+                <CtaZone>
+                  {soldOut ? (
+                    <button type="button" disabled className="btn btn-line w-full cursor-not-allowed opacity-60 sm:w-auto">
+                      Agotado
+                    </button>
+                  ) : (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="btn btn-sage w-full sm:w-auto">
+                      <WhatsAppIcon className="size-5" />
+                      {commerce.ctaLabel}
+                    </a>
+                  )}
+                </CtaZone>
+                <p className="mt-4 text-small text-warm-gray">
+                  {soldOut
+                    ? `${presentation.label} no está disponible por ahora.`
+                    : `Abre WhatsApp con tu consulta: ${product.shortName}, ${fragrance.name}, ${presentation.label}.`}
+                </p>
+              </>
+            }
+          />
+        </div>
 
         <dl className="detail-spec">
           <div>

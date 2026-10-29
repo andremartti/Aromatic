@@ -5,6 +5,7 @@ Este repositorio contiene dos proyectos:
 | Proyecto | Carpeta | Descripción |
 |---|---|---|
 | **Sitio web** | [`web/`](web/README.md) | Web premium de la marca (Next.js). Suavizante, Detergente líquido y Jabón líquido. |
+| **Tienda en línea y panel** | [`supabase/`](docs/TIENDA.md) · `web/` | Carrito, checkout, pagos con PixelPay, transferencia y contra entrega; panel `/admin` con pedidos, envíos, guías A4, clientes, productos e inventario. Puesta en marcha en [`docs/TIENDA.md`](docs/TIENDA.md). |
 | **Sistema financiero** | raíz · `generador/` | Excel de gestión comercial y financiera (documentado abajo). |
 
 ---

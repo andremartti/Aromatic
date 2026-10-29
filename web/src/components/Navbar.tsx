@@ -9,8 +9,15 @@ import { NAV_LINKS } from "@/config/navigation";
 import { site } from "@/config/site";
 import { GENERAL_MESSAGE, whatsappLink } from "@/lib/whatsapp";
 import { WhatsAppIcon } from "./icons";
+import { CartButton } from "./shop/CartDrawer";
+import { shopConfigured } from "@/config/shop";
 
 const EASE_FLOW = [0.22, 1, 0.36, 1] as const;
+
+/** Con la tienda en línea configurada se agrega el acceso a la tienda y a la consulta de pedidos. */
+const LINKS: readonly { href: string; label: string }[] = shopConfigured
+  ? [{ href: "/tienda/", label: "Tienda" }, ...NAV_LINKS.filter((l) => l.label !== "Contacto"), { href: "/pedido/", label: "Mi pedido" }]
+  : NAV_LINKS;
 
 interface NavbarProps {
   /** Coreografía de entrada (solo en la portada). */
@@ -76,9 +83,9 @@ export function Navbar({ intro = false }: NavbarProps) {
             {site.name}
           </Link>
 
-          <nav aria-label="Principal" className="hidden md:block">
+          <nav aria-label="Principal" className="hidden md:flex md:items-center md:gap-9">
             <ul className="flex items-center gap-9">
-              {NAV_LINKS.map((link, i) => (
+              {LINKS.map((link, i) => (
                 <li key={link.href} className={intro ? "in-rise" : ""} style={d(340 + i * 60)}>
                   <Link href={link.href} className="nav-link inline-flex min-h-11 items-center">
                     {link.label}
@@ -86,8 +93,11 @@ export function Navbar({ intro = false }: NavbarProps) {
                 </li>
               ))}
             </ul>
+            <CartButton />
           </nav>
 
+          <div className="flex items-center gap-1 md:hidden">
+          <CartButton />
           <button
             ref={toggleRef}
             type="button"
@@ -100,6 +110,7 @@ export function Navbar({ intro = false }: NavbarProps) {
             Menú
             <List size={20} weight="light" aria-hidden="true" />
           </button>
+          </div>
         </div>
         <span className={`site-nav-rule ${intro ? "in-draw" : ""}`} style={d(100)} aria-hidden="true" />
       </header>
@@ -127,7 +138,7 @@ export function Navbar({ intro = false }: NavbarProps) {
             </div>
             <nav aria-label="Menú móvil" className="frame flex-1 pt-8">
               <ul>
-                {NAV_LINKS.map((link, i) => (
+                {LINKS.map((link, i) => (
                   <motion.li
                     key={link.href}
                     initial={reduce ? false : { opacity: 0, transform: "translateY(12px)" }}
